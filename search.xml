@@ -1,74 +1,9 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  
-  
-  
-  <title>
-    My-first-blog |
-    
-    Hexo
-  </title>
-  
-    <link rel="shortcut icon" href="/favicon.ico">
-    
-  
-<link rel="stylesheet" href="/css/style.css">
-
-  
-  
-<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
-
-  
-  
-<script src="/js/pace.min.js"></script>
-
-<meta name="generator" content="Hexo 6.0.0"><link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
-</head>
-
-<body>
-  <main class="content">
-    <section class="outer">
-  <article id="post-My-first-blog" class="article article-type-post" itemscope
-  itemprop="blogPost" data-scroll-reveal>
-
-  <div class="article-inner">
-    
-    <header class="article-header">
-      
-
-<h1 class="article-title" itemprop="name">
-  My-first-blog
-</h1>
-
-
-
-    </header>
-    
-
-    
-    <div class="article-meta">
-      <a href="/2022/01/01/My-first-blog/" class="article-date">
-  <time datetime="2022-01-01T08:15:27.000Z" itemprop="datePublished">2022-01-01</time>
-</a>
-      
-    </div>
-    
-
-    
-    
-<div class="tocbot"></div>
-
-    
-
-    <div class="article-entry" itemprop="articleBody">
-      
-      
-      
-      <hr>
+<?xml version="1.0" encoding="utf-8"?>
+<search>
+  <entry>
+    <title>My-first-blog</title>
+    <url>/2022/01/01/My-first-blog/</url>
+    <content><![CDATA[<hr>
 <p>title: Gallery</p>
 <p>albums: [<br>        [“img_url”,”img_caption”],<br>        [“img_url”,”img_caption”]<br>        ]</p>
 <hr>
@@ -85,163 +20,24 @@
 <h5 id="2-正态化的kaiming初始化he-normal-交叉熵损失函数（CE-固定学习率（0-3）-不正则化"><a href="#2-正态化的kaiming初始化he-normal-交叉熵损失函数（CE-固定学习率（0-3）-不正则化" class="headerlink" title="2.正态化的kaiming初始化he_normal+交叉熵损失函数（CE)+固定学习率（0.3）+不正则化"></a>2.正态化的kaiming初始化he_normal+交叉熵损失函数（CE)+固定学习率（0.3）+不正则化</h5><p>Epoch: #0, CE: 0.023365, Accuracy: 93.10%<br>Epoch: #2, CE: 0.011140, Accuracy: 96.38%<br>Epoch: #4, CE: 0.007120, Accuracy: 97.40%<br>Epoch: #6, CE: 0.005120, Accuracy: 97.53%<br>Epoch: #8, CE: 0.003925, Accuracy: 97.64%<br>Epoch: #10, CE: 0.003079, Accuracy: 97.74%<br>Epoch: #12, CE: 0.002441, Accuracy: 97.78%<br>Epoch: #14, CE: 0.001951, Accuracy: 97.83%<br>Epoch: #16, CE: 0.001579, Accuracy: 97.90%<br>Epoch: #18, CE: 0.001301, Accuracy: 97.96%<br>Epoch: #20, CE: 0.001093, Accuracy: 98.01%<br>Epoch: #22, CE: 0.000935, Accuracy: 98.01%<br>Epoch: #24, CE: 0.000805, Accuracy: 98.06%<br>Epoch: #26, CE: 0.000680, Accuracy: 98.10%<br>Epoch: #28, CE: 0.000558, Accuracy: 98.18%<br>Epoch: #30, CE: 0.000466, Accuracy: 98.21%<br>Epoch: #32, CE: 0.000400, Accuracy: 98.25%<br>Epoch: #34, CE: 0.000349, Accuracy: 98.27%<br>Epoch: #36, CE: 0.000309, Accuracy: 98.26%<br>Epoch: #38, CE: 0.000276, Accuracy: 98.29%</p>
 <h3 id="2-对比不同的损失函数"><a href="#2-对比不同的损失函数" class="headerlink" title="2.对比不同的损失函数"></a>2.对比不同的损失函数</h3><h5 id="1-正太分布随机初始化（np-random-randn）-最小均方误差（MMSE）-固定学习率（0-3）-不正则化"><a href="#1-正太分布随机初始化（np-random-randn）-最小均方误差（MMSE）-固定学习率（0-3）-不正则化" class="headerlink" title="1.正太分布随机初始化（np.random.randn）+最小均方误差（MMSE）+固定学习率（0.3）+不正则化"></a>1.正太分布随机初始化（np.random.randn）+最小均方误差（MMSE）+固定学习率（0.3）+不正则化</h5><p>Epoch: #0, MSE: 0.078884, Accuracy: 57.78%<br>Epoch: #2, MSE: 0.072795, Accuracy: 60.85%<br>Epoch: #4, MSE: 0.066671, Accuracy: 62.90%<br>Epoch: #6, MSE: 0.065647, Accuracy: 63.04%<br>Epoch: #8, MSE: 0.033509, Accuracy: 80.74%<br>Epoch: #10, MSE: 0.028078, Accuracy: 82.90%<br>Epoch: #12, MSE: 0.026851, Accuracy: 83.49%<br>Epoch: #14, MSE: 0.025284, Accuracy: 83.82%<br>Epoch: #16, MSE: 0.009739, Accuracy: 92.26%<br>Epoch: #18, MSE: 0.008055, Accuracy: 92.79%<br>Epoch: #20, MSE: 0.007237, Accuracy: 93.12%<br>Epoch: #22, MSE: 0.006950, Accuracy: 93.13%<br>Epoch: #24, MSE: 0.006530, Accuracy: 93.20%<br>Epoch: #26, MSE: 0.006336, Accuracy: 93.36%<br>Epoch: #28, MSE: 0.006061, Accuracy: 93.46%<br>Epoch: #30, MSE: 0.005980, Accuracy: 93.47%<br>Epoch: #32, MSE: 0.005759, Accuracy: 93.52%<br>Epoch: #34, MSE: 0.005568, Accuracy: 93.57%<br>Epoch: #36, MSE: 0.005540, Accuracy: 93.67%<br>Epoch: #38, MSE: 0.005468, Accuracy: 93.61%</p>
 <h3 id="3-对比不同的学习率调整方法"><a href="#3-对比不同的学习率调整方法" class="headerlink" title="3.对比不同的学习率调整方法"></a>3.对比不同的学习率调整方法</h3><h5 id="1-正太分布随机初始化（np-random-randn）-最小均方误差（CE）-exponent学习率（0-3指数下降）-不正则化"><a href="#1-正太分布随机初始化（np-random-randn）-最小均方误差（CE）-exponent学习率（0-3指数下降）-不正则化" class="headerlink" title="1.正太分布随机初始化（np.random.randn）+最小均方误差（CE）+exponent学习率（0.3指数下降）+不正则化"></a>1.正太分布随机初始化（np.random.randn）+最小均方误差（CE）+exponent学习率（0.3指数下降）+不正则化</h5><p>Epoch: #0, CE: 0.041612, Accuracy: 92.95%<br>Epoch: #2, CE: 0.014260, Accuracy: 94.62%<br>Epoch: #4, CE: 0.007053, Accuracy: 95.00%<br>Epoch: #6, CE: 0.004012, Accuracy: 95.19%<br>Epoch: #8, CE: 0.001646, Accuracy: 95.76%<br>Epoch: #10, CE: 0.001078, Accuracy: 95.71%<br>Epoch: #12, CE: 0.000293, Accuracy: 96.05%<br>Epoch: #14, CE: 0.000205, Accuracy: 96.13%<br>Epoch: #16, CE: 0.000163, Accuracy: 96.14%<br>Epoch: #18, CE: 0.000134, Accuracy: 96.14%<br>Epoch: #20, CE: 0.000112, Accuracy: 96.17%<br>Epoch: #22, CE: 0.000097, Accuracy: 96.14%<br>Epoch: #24, CE: 0.000085, Accuracy: 96.16%<br>Epoch: #26, CE: 0.000075, Accuracy: 96.17%<br>Epoch: #28, CE: 0.000067, Accuracy: 96.19%<br>Epoch: #30, CE: 0.000060, Accuracy: 96.23%<br>Epoch: #32, CE: 0.000056, Accuracy: 96.22%<br>Epoch: #34, CE: 0.000051, Accuracy: 96.24%<br>Epoch: #36, CE: 0.000047, Accuracy: 96.25%<br>Epoch: #38, CE: 0.000044, Accuracy: 96.25%</p>
-<h3 id="4-对比不同的正则化方法"><a href="#4-对比不同的正则化方法" class="headerlink" title="4.对比不同的正则化方法"></a>4.对比不同的正则化方法</h3>
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://example.com/2022/01/01/My-first-blog/" data-id="ckxvq19hx0000ywwa8i9310b8" class="article-share-link">
-        Share
-      </a>
-      
-    </footer>
+<h3 id="4-对比不同的正则化方法"><a href="#4-对比不同的正则化方法" class="headerlink" title="4.对比不同的正则化方法"></a>4.对比不同的正则化方法</h3>]]></content>
+  </entry>
+  <entry>
+    <title>Hello World</title>
+    <url>/2022/01/01/hello-world/</url>
+    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
+<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
 
-  </div>
+<p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p>
+<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
 
-  
-  
-<nav class="article-nav">
-  
-  
-  <a href="/2022/01/01/hello-world/" class="article-nav-link">
-    <strong class="article-nav-caption">Older</strong>
-    <div class="article-nav-title">Hello World</div>
-  </a>
-  
-</nav>
+<p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p>
+<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
 
-  
+<p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p>
+<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
 
-  
-  
-  
-  
-
-</article>
-</section>
-    <footer class="footer">
-  <div class="outer">
-    <div class="float-right">
-      <ul class="list-inline">
-  
-  <li><i class="fe fe-smile-alt"></i> <span id="busuanzi_value_site_uv"></span></li>
-  
-  <li><i class="fe fe-bookmark"></i> <span id="busuanzi_value_page_pv"></span></li>
-  
-</ul>
-    </div>
-    <ul class="list-inline">
-      <li>Hexo &copy; 2022</li>
-      
-        <li>ZHWANGART</li>
-      
-      <li>Powered by <a href="http://hexo.io/" target="_blank">Hexo</a></li>
-      <li>theme  <a target="_blank" rel="noopener" href="https://github.com/zhwangart/hexo-theme-ocean">Ocean</a></li>
-    </ul>
-  </div>
-</footer>
-  </main>
-  <aside class="sidebar">
-    <button class="navbar-toggle"></button>
-<nav class="navbar">
-  
-  <div class="logo">
-    <a href="/"><img src="/images/hexo.svg" alt="Hexo"></a>
-  </div>
-  
-  <ul class="nav nav-main">
-    
-    <li class="nav-item">
-      <a class="nav-item-link" href="/">Home</a>
-    </li>
-    
-    <li class="nav-item">
-      <a class="nav-item-link" href="/archives">Archives</a>
-    </li>
-    
-    <li class="nav-item">
-      <a class="nav-item-link" href="/gallery">Gallery</a>
-    </li>
-    
-    <li class="nav-item">
-      <a class="nav-item-link" href="/about">About</a>
-    </li>
-    
-    <li class="nav-item">
-      <a class="nav-item-link nav-item-search" title="Search">
-        <i class="fe fe-search"></i>
-        Search
-      </a>
-    </li>
-  </ul>
-</nav>
-<nav class="navbar navbar-bottom">
-  <ul class="nav">
-    <li class="nav-item">
-      <div class="totop" id="totop">
-  <i class="fe fe-rocket"></i>
-</div>
-    </li>
-    <li class="nav-item">
-      
-      <a class="nav-item-link" target="_blank" href="/atom.xml" title="RSS Feed">
-        <i class="fe fe-feed"></i>
-      </a>
-      
-    </li>
-  </ul>
-</nav>
-<div class="search-form-wrap">
-  <div class="local-search local-search-plugin">
-  <input type="search" id="local-search-input" class="local-search-input" placeholder="Search...">
-  <div id="local-search-result" class="local-search-result"></div>
-</div>
-</div>
-  </aside>
-  
-<script src="/js/jquery-2.0.3.min.js"></script>
-
-
-<script src="/js/jquery.justifiedGallery.min.js"></script>
-
-
-<script src="/js/lazyload.min.js"></script>
-
-
-<script src="/js/busuanzi-2.3.pure.min.js"></script>
-
-
-
-<script src="/fancybox/jquery.fancybox.min.js"></script>
-
-
-
-
-<script src="/js/copybtn.js"></script>
-
-
-
-
-
-<script src="/js/tocbot.min.js"></script>
-
-<script>
-  // Tocbot_v4.7.0  http://tscanlin.github.io/tocbot/
-  tocbot.init({
-    tocSelector: '.tocbot',
-    contentSelector: '.article-entry',
-    headingSelector: 'h1, h2, h3, h4, h5, h6',
-    hasInnerContainers: true,
-    scrollSmooth: true,
-    positionFixedSelector: '.tocbot',
-    positionFixedClass: 'is-position-fixed',
-    fixedSidebarOffset: 'auto',
-  });
-</script>
-
-
-
-<script src="/js/ocean.js"></script>
-
-</body>
-
-</html>
+<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
+]]></content>
+  </entry>
+</search>
