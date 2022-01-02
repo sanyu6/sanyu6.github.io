@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
-  <title>Hexo</title>
+  <title>SunYu</title>
   
-  
+  <subtitle>图神经网络、推荐系统、机器学习</subtitle>
   <link href="http://example.com/atom.xml" rel="self"/>
   
   <link href="http://example.com/"/>
-  <updated>2022-01-01T11:59:59.346Z</updated>
+  <updated>2022-01-02T11:12:34.251Z</updated>
   <id>http://example.com/</id>
   
   <author>
-    <name>John Doe</name>
+    <name>SanYu</name>
     
   </author>
   
@@ -21,13 +21,17 @@
     <link href="http://example.com/2022/01/01/My-first-blog/"/>
     <id>http://example.com/2022/01/01/My-first-blog/</id>
     <published>2022-01-01T08:15:27.000Z</published>
-    <updated>2022-01-01T11:59:59.346Z</updated>
+    <updated>2022-01-02T11:12:34.251Z</updated>
     
     
     <summary type="html">&lt;p&gt;神经网络作业&lt;/p&gt;</summary>
     
     
     
+    <category term="AI" scheme="http://example.com/categories/AI/"/>
+    
+    
+    <category term="work" scheme="http://example.com/tags/work/"/>
     
   </entry>
   
@@ -36,13 +40,17 @@
     <link href="http://example.com/2022/01/01/hello-world/"/>
     <id>http://example.com/2022/01/01/hello-world/</id>
     <published>2022-01-01T07:32:12.472Z</published>
-    <updated>2022-01-01T12:00:37.224Z</updated>
+    <updated>2022-01-02T11:12:57.211Z</updated>
     
     
     <summary type="html">&lt;p&gt;测试&lt;/p&gt;</summary>
     
     
     
+    <category term="Test" scheme="http://example.com/categories/Test/"/>
+    
+    
+    <category term="test" scheme="http://example.com/tags/test/"/>
     
   </entry>
   
