@@ -1650,6 +1650,13 @@ pre .javascript .function {
 .fancybox-close:hover {
   border: none;
 }
+.post-copyright {
+  margin: 2em 0 0;
+  padding: 0.5em 1em;
+  border-left: 3px solid #ff1700;
+  background-color: #f9f9f9;
+  list-style: none;
+}
 .rtl.post-body p,
 .rtl.post-body a,
 .rtl.post-body h1,
@@ -1795,12 +1802,13 @@ pre .javascript .function {
 }
 .feed-link {
   margin-top: 20px;
+  border-top: 1px solid #555;
+  border-bottom: 1px solid #555;
 }
 .feed-link a {
   display: inline-block;
   padding: 0 15px;
   color: #fc6423;
-  border: 1px solid #fc6423;
   border-radius: 4px;
 }
 .feed-link a i {
@@ -1833,7 +1841,7 @@ pre .javascript .function {
   width: 4px;
   height: 4px;
   border-radius: 50%;
-  background: #8371ff;
+  background: #ff6e6a;
 }
 .links-of-blogroll {
   font-size: 13px;
@@ -2701,6 +2709,9 @@ embed {
 }
 .links-of-blogroll-inline .links-of-blogroll-item {
   display: inline-block;
+}
+.vcopy.txt-right {
+  display: none;
 }
 .post-button .btn {
   color: #555 !important;
