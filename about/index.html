@@ -667,18 +667,18 @@
   
   <script type="text/javascript">
     var GUEST = ['nick','mail','link'];
-    var guest = 'nick,mail,link';
+    var guest = 'nick';
     guest = guest.split(',').filter(item=>{
       return GUEST.indexOf(item)>-1;
     });
     new Valine({
         el: '#comments' ,
         verify: false,
-        notify: true,
+        notify: false,
         appId: 'tbda6tCC8BcFDI8h3G00uG3n-gzGzoHsz',
         appKey: 'UaIgiWxJpRerOQ1ua2TKz4pQ',
         placeholder: '让我们在交流中进步',
-        avatar:'mm',
+        avatar:'monsterid',
         guest_info:guest,
         pageSize:'10' || 10,
     });
