@@ -88,16 +88,23 @@
 
 
 
-<meta name="description" content="图神经网络、推荐系统、机器学习">
-<meta property="og:type" content="website">
-<meta property="og:title" content="SunYu">
-<meta property="og:url" content="http://example.com/tags/work/index.html">
+<meta name="description" content="作业一：手写数字分类我通过对比不同参数的初始化方法（标准正太分布、kaiming、Glorot）发现kaming初始化方法效果较好。通过对比不同的损失函数（交叉熵损失函数和MSE）由于我最后一层采用的是softmax层所以交叉熵损失函数效果明显好于MSE，采用MSE时效果极其差劣，后来我将最后一层改为sigmod层用MSE实验后发现效果有着显著提升但不及softmax+交叉熵，所以可以得出结论再多">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Minst">
+<meta property="og:url" content="http://example.com/2022/02/27/MNIST/index.html">
 <meta property="og:site_name" content="SunYu">
-<meta property="og:description" content="图神经网络、推荐系统、机器学习">
+<meta property="og:description" content="作业一：手写数字分类我通过对比不同参数的初始化方法（标准正太分布、kaiming、Glorot）发现kaming初始化方法效果较好。通过对比不同的损失函数（交叉熵损失函数和MSE）由于我最后一层采用的是softmax层所以交叉熵损失函数效果明显好于MSE，采用MSE时效果极其差劣，后来我将最后一层改为sigmod层用MSE实验后发现效果有着显著提升但不及softmax+交叉熵，所以可以得出结论再多">
 <meta property="og:locale">
+<meta property="og:image" content="http://example.com/2022/02/27/MNIST/4c2f651ac53336420097632a284c7043.png">
+<meta property="og:image" content="http://example.com/2022/02/27/MNIST/1fa54bd0960f4a2bef7d57687cf9e06d.png">
+<meta property="og:image" content="http://example.com/2022/02/27/MNIST/a7ad51c113701c1f6288b44ed5ce6850.png">
+<meta property="og:image" content="http://example.com/2022/02/27/MNIST/10d296dc3d938cd1db9c63762c0b6be7.png">
+<meta property="article:published_time" content="2022-02-27T05:27:39.000Z">
+<meta property="article:modified_time" content="2022-02-27T05:57:52.739Z">
 <meta property="article:author" content="SanYu">
 <meta property="article:tag" content="图神经网络、推荐系统">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/2022/02/27/MNIST/4c2f651ac53336420097632a284c7043.png">
 
 
 
@@ -127,13 +134,13 @@
 
 
 
-  <link rel="canonical" href="http://example.com/tags/work/"/>
+  <link rel="canonical" href="http://example.com/2022/02/27/MNIST/"/>
 
 
 
 
 
-  <title>标签: work | SunYu</title>
+  <title>Minst | SunYu</title>
   
 
 
@@ -152,7 +159,7 @@
     
   
 
-  <div class="container sidebar-position-left ">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -290,54 +297,303 @@
           <div id="content" class="content">
             
 
-  
-  
-  
-  <div class="post-block tag">
+  <div id="posts" class="posts-expand">
+    
 
-    <div id="posts" class="posts-collapse">
-      <div class="collection-title">
-        <h1>work<small>标签</small>
-        </h1>
-      </div>
+  
 
-      
-        
+  
+  
+  
 
   <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/02/27/MNIST/">
 
-      <h2 class="post-title">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="SunYu">
+    </span>
+
+    
+      <header class="post-header">
+
         
-            <a class="post-title-link" href="/2022/01/01/My-first-blog/" itemprop="url">
-              
-                <span itemprop="name">My-first-blog</span>
-              
-            </a>
         
-      </h2>
+          <h1 class="post-title" itemprop="name headline">Minst</h1>
+        
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2022-01-01T16:15:27+08:00"
-              content="2022-01-01" >
-          01-01
-        </time>
-      </div>
+        <div class="post-meta">
+          
 
-    </header>
-  </article>
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2022-02-27T13:27:39+08:00">
+                2022-02-27
+              </time>
+            
 
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2022/02/27/MNIST/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2022/02/27/MNIST/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  512
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  1
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="作业一：手写数字分类"><a href="#作业一：手写数字分类" class="headerlink" title="作业一：手写数字分类"></a>作业一：手写数字分类</h2><p><strong>我通过对比不同参数的初始化方法（标准正太分布、kaiming、Glorot）发现kaming初始化方法效果较好。通过对比不同的损失函数（交叉熵损失函数和MSE）由于我最后一层采用的是softmax层所以交叉熵损失函数效果明显好于MSE，采用MSE时效果极其差劣，后来我将最后一层改为sigmod层用MSE实验后发现效果有着显著提升但不及softmax+交叉熵，所以可以得出结论再多分类任务中softmax和交叉熵损失比较搭配。</strong></p>
+<p><strong>我简单尝试了不同的学习率调整方案(固定学习率、指数下降、学习率预热)，或许是我之前就已经调整过学习率的原因，所以在我的模型中固定学习率的效果较好（0.3）。在对比不同正则化实验中，我开始将正则化参数调的较大，发现模型效果较差，认为手写数字识别这种简单模型或许不太需要正则化来约束参数，其中L2正则化效果优于L1正则化，具体的实验结果如下：</strong></p>
+<p><strong>最后我采用的模型是（kaiming初始化+交叉熵损失函数+0.3固定学习率+无正则化）最优准确率98.24%</strong></p>
+<p><a target="_blank" rel="noopener" href="https://github.com/SunYuMs/Homework/">https://github.com/SunYuMs/Homework/</a></p>
+<br/>
+
+<h3 id="（1）对比不同的参数初始化方法"><a href="#（1）对比不同的参数初始化方法" class="headerlink" title="（1）对比不同的参数初始化方法"></a>（1）对比不同的参数初始化方法</h3><br/>
+
+<table>
+<thead>
+<tr>
+<th align="center">初始化方法</th>
+<th align="center">测试集准确率%</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">标准正太分布初始化（Baseline）</td>
+<td align="center">96.15</td>
+</tr>
+<tr>
+<td align="center">kaiming初始化</td>
+<td align="center">98.24</td>
+</tr>
+<tr>
+<td align="center">Glorot初始化</td>
+<td align="center">98.20</td>
+</tr>
+</tbody></table>
+<img src="4c2f651ac53336420097632a284c7043.png" alt="截图" style="zoom:70%;" />
+
+<h3 id="（2）对比不同的损失函数"><a href="#（2）对比不同的损失函数" class="headerlink" title="（2）对比不同的损失函数"></a>（2）对比不同的损失函数</h3><table>
+<thead>
+<tr>
+<th align="center">损失函数</th>
+<th align="center">测试集准确率%</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">交叉熵损失函数（Baseline）</td>
+<td align="center">96.15</td>
+</tr>
+<tr>
+<td align="center">MS</td>
+<td align="center">65.40</td>
+</tr>
+</tbody></table>
+<img src="1fa54bd0960f4a2bef7d57687cf9e06d.png" alt="截图" style="zoom:70%;" />
+
+<h3 id="（3）对比不同的学习率调整方法"><a href="#（3）对比不同的学习率调整方法" class="headerlink" title="（3）对比不同的学习率调整方法"></a>（3）对比不同的学习率调整方法</h3><table>
+<thead>
+<tr>
+<th align="center">学习率调整方法</th>
+<th align="center">测试集准确率%</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">固定（Baseline）</td>
+<td align="center">96.15</td>
+</tr>
+<tr>
+<td align="center">学习率预热</td>
+<td align="center">95.16</td>
+</tr>
+<tr>
+<td align="center">指数下降</td>
+<td align="center">96.08</td>
+</tr>
+</tbody></table>
+<img src="a7ad51c113701c1f6288b44ed5ce6850.png" alt="截图" style="zoom:70%;" />
+
+<h3 id="（4）对比不同的正则化方法"><a href="#（4）对比不同的正则化方法" class="headerlink" title="（4）对比不同的正则化方法"></a>（4）对比不同的正则化方法</h3><table>
+<thead>
+<tr>
+<th align="center">正则化方法</th>
+<th align="center">测试集准确率%</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">无正则（Baseline）</td>
+<td align="center">96.15</td>
+</tr>
+<tr>
+<td align="center">L1</td>
+<td align="center">95.94</td>
+</tr>
+<tr>
+<td align="center">L2</td>
+<td align="center">97.01</td>
+</tr>
+</tbody></table>
+<img src="10d296dc3d938cd1db9c63762c0b6be7.png" alt="截图" style="zoom:70%;" />
+
+      
+    </div>
+    <div>
+      
+        <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+    
+</div>
 
       
     </div>
 
+    
+    
+    
+    
+
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者</strong>
+    SanYu
+  </li>
+  <li class="post-copyright-link">
+  <strong>本文链接</strong>
+  <a target="_blank" rel="noopener" href="https://sunyums.github.io/2022/02/27/MNIST/" title="Minst">https://sunyums.github.io/2022/02/27/MNIST/</a>
+</li>
+
+  <li class="post-copyright-license">
+    <strong>版权声明 </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
+    
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2022/02/27/SequencePrediction/" rel="prev" title="SequencePrediction">
+                SequencePrediction <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </div>
   
   
   
+  </article>
 
-  
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -345,6 +601,13 @@
 
 
           
+
+  
+    <div class="comments" id="comments">
+    </div>
+  
+
+
 
         </div>
         
@@ -365,8 +628,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -392,22 +664,13 @@
             
 
             
-              
-              
-              <div class="site-state-item site-state-categories">
-                <a href="/categories/index.html">
-                  <span class="site-state-item-count">2</span>
-                  <span class="site-state-item-name">分类</span>
-                </a>
-              </div>
-            
 
             
               
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-count">1</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -454,11 +717,11 @@
                 
                 
                   <li class="recent_posts_li">
-                    <a href="/2022/01/01/My-first-blog/" title="My-first-blog" target="_blank">My-first-blog</a>
+                    <a href="/2022/02/27/SequencePrediction/" title="SequencePrediction" target="_blank">SequencePrediction</a>
                   </li>
                 
                   <li class="recent_posts_li">
-                    <a href="/2022/01/01/hello-world/" title="Hello World" target="_blank">Hello World</a>
+                    <a href="/2022/02/27/MNIST/" title="Minst" target="_blank">Minst</a>
                   </li>
                 
               </ul>
@@ -477,6 +740,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%9C%E4%B8%9A%E4%B8%80%EF%BC%9A%E6%89%8B%E5%86%99%E6%95%B0%E5%AD%97%E5%88%86%E7%B1%BB"><span class="nav-number">1.</span> <span class="nav-text">作业一：手写数字分类</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BC%881%EF%BC%89%E5%AF%B9%E6%AF%94%E4%B8%8D%E5%90%8C%E7%9A%84%E5%8F%82%E6%95%B0%E5%88%9D%E5%A7%8B%E5%8C%96%E6%96%B9%E6%B3%95"><span class="nav-number">1.1.</span> <span class="nav-text">（1）对比不同的参数初始化方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BC%882%EF%BC%89%E5%AF%B9%E6%AF%94%E4%B8%8D%E5%90%8C%E7%9A%84%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0"><span class="nav-number">1.2.</span> <span class="nav-text">（2）对比不同的损失函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BC%883%EF%BC%89%E5%AF%B9%E6%AF%94%E4%B8%8D%E5%90%8C%E7%9A%84%E5%AD%A6%E4%B9%A0%E7%8E%87%E8%B0%83%E6%95%B4%E6%96%B9%E6%B3%95"><span class="nav-number">1.3.</span> <span class="nav-text">（3）对比不同的学习率调整方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BC%884%EF%BC%89%E5%AF%B9%E6%AF%94%E4%B8%8D%E5%90%8C%E7%9A%84%E6%AD%A3%E5%88%99%E5%8C%96%E6%96%B9%E6%B3%95"><span class="nav-number">1.4.</span> <span class="nav-text">（4）对比不同的正则化方法</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -505,7 +784,7 @@
     
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
-    <span title="Site words total count">1.1k</span>
+    <span title="Site words total count">3.2k</span>
   
 </div>
 <!--
@@ -626,6 +905,10 @@
   
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
 
   
 
@@ -1047,26 +1330,6 @@
   
 
   
-  
-    <script type="text/x-mathjax-config">
-      MathJax.Hub.Config({
-        tex2jax: {
-          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
-          processEscapes: true,
-          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
-        }
-      });
-    </script>
-
-    <script type="text/x-mathjax-config">
-      MathJax.Hub.Queue(function() {
-        var all = MathJax.Hub.getAllJax(), i;
-        for (i=0; i < all.length; i += 1) {
-          all[i].SourceElement().parentNode.className += ' has-jax';
-        }
-      });
-    </script>
-    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
   
 
 

@@ -1,0 +1,1425 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link href="/lib/pace/pace-theme-minimal.min.css?v=1.0.2" rel="stylesheet">
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="homework," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="SunYu" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="[https:&#x2F;&#x2F;github.com&#x2F;SunYuMs&#x2F;Homework&#x2F;](https:&#x2F;&#x2F;github.com&#x2F;SunYuMs&#x2F;Homework&#x2F;)    1.数据预处理(a) 为什么需要验证集？验证集的作用在于模拟测试集，而测试集的最大特点就是未知，即在训练过程中是见不到的。正因为验证集和测试集在训练过程中都是未知的，我们才可以说，如果你的超参数适用于验证集，那么它们也大概会适用于测试集。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="SequencePrediction">
+<meta property="og:url" content="http://example.com/2022/02/27/SequencePrediction/index.html">
+<meta property="og:site_name" content="SunYu">
+<meta property="og:description" content="[https:&#x2F;&#x2F;github.com&#x2F;SunYuMs&#x2F;Homework&#x2F;](https:&#x2F;&#x2F;github.com&#x2F;SunYuMs&#x2F;Homework&#x2F;)    1.数据预处理(a) 为什么需要验证集？验证集的作用在于模拟测试集，而测试集的最大特点就是未知，即在训练过程中是见不到的。正因为验证集和测试集在训练过程中都是未知的，我们才可以说，如果你的超参数适用于验证集，那么它们也大概会适用于测试集。">
+<meta property="og:locale">
+<meta property="article:published_time" content="2022-02-27T06:01:10.000Z">
+<meta property="article:modified_time" content="2022-02-27T06:09:55.159Z">
+<meta property="article:author" content="SanYu">
+<meta property="article:tag" content="homework">
+<meta name="twitter:card" content="summary">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":true,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://example.com/2022/02/27/SequencePrediction/"/>
+
+
+
+
+
+  <title>SequencePrediction | SunYu</title>
+  
+
+
+
+
+
+
+
+
+<meta name="generator" content="Hexo 6.0.0"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">SunYu</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">图神经网络、推荐系统、机器学习</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/02/27/SequencePrediction/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="SunYu">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">SequencePrediction</h1>
+        
+
+        <div class="post-meta">
+          
+
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2022-02-27T14:01:10+08:00">
+                2022-02-27
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2022/02/27/SequencePrediction/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2022/02/27/SequencePrediction/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  2.7k
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  9
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <br/>
+[https://github.com/SunYuMs/Homework/](https://github.com/SunYuMs/Homework/)
+
+
+
+<h3 id="1-数据预处理"><a href="#1-数据预处理" class="headerlink" title="1.数据预处理"></a>1.数据预处理</h3><h4 id="a-为什么需要验证集？"><a href="#a-为什么需要验证集？" class="headerlink" title="(a) 为什么需要验证集？"></a>(a) 为什么需要验证集？</h4><p>验证集的作用在于模拟测试集，而测试集的最大特点就是未知，即在训练过程中是见不到的。正因为验证集和测试集在训练过程中都是未知的，我们才可以说，如果你的超参数适用于验证集，那么它们也大概会适用于测试集。如果你不分开验证集和测试集，那么我们调出的超参数就是适用于训练集的，但因为训练集和测试集不具有未知这个共同点，所以训练集上的好性能不一定能泛化到测试集上去，这就导致了过拟合。使得模型适合训练集而不适合测试集。</p>
+<h4 id="b-应该如何选取验证集，验证集和测试集应该有什么联系"><a href="#b-应该如何选取验证集，验证集和测试集应该有什么联系" class="headerlink" title="(b) 应该如何选取验证集，验证集和测试集应该有什么联系?"></a>(b) 应该如何选取验证集，验证集和测试集应该有什么联系?</h4><p>通常可以在训练数据中中按照4:1或5:1等比例来划分训练集和验证集。因为超参数无法在训练集上进行训练,因此我们单独设立了一个验证集,用于选择(人工训练)最优的超参数.因为验证集是用于选择超参数的,因此验证集和训练集是独立不重叠的。而测试集是用于在完成神经网络训练后,为了客观评价模型在其未见过的数据上的性能,因此测试与验证集和训练集之间也是独立不重叠的,而且测试集不能提出对参数或者超参数的修改意见,只能作为评价网络性能的一个指标。</p>
+<h4 id="c-为什么要在切分数据后再划分训练和验证集？直接在原始的时间序列中，划分几条作为验证集会出现什么问题？"><a href="#c-为什么要在切分数据后再划分训练和验证集？直接在原始的时间序列中，划分几条作为验证集会出现什么问题？" class="headerlink" title="(c) 为什么要在切分数据后再划分训练和验证集？直接在原始的时间序列中，划分几条作为验证集会出现什么问题？"></a>(c) 为什么要在切分数据后再划分训练和验证集？直接在原始的时间序列中，划分几条作为验证集会出现什么问题？</h4><p>对于时间序列预测这种任务，如果你的验证集中与训练集中时间上出现重叠，模型会在训练时记忆你训练集中出现的重叠数据，。例如，告诉你5日到10日的数据，让你预测第11日数据（验证阶段）；同时，给你11日到16日的数据，让你预测第17日的数据（训练阶段）。这11日的价格模型已经遇见过了，影响了神经单元权重，自然在验证时无法做到客观。而直接在原始的时间序列中，划分几条作为验证集，可能会导致上述情况发生，所以需要先切分数据再划分训练和验证集，所以一定要选择老数据进行training,新数据进行validation。</p>
+<h4 id="d-数据参与训练的时候打乱顺序-shuffle-输入模型，会有什么好处，什么坏处？"><a href="#d-数据参与训练的时候打乱顺序-shuffle-输入模型，会有什么好处，什么坏处？" class="headerlink" title="(d) 数据参与训练的时候打乱顺序(shuffle)输入模型，会有什么好处，什么坏处？"></a>(d) 数据参与训练的时候打乱顺序(shuffle)输入模型，会有什么好处，什么坏处？</h4><p>将训练模型的数据集进行打乱的操作。原始的数据，在样本均衡的情况下可能是按照某种顺序进行排列，如前半部分为某一类别的数据，后半部分为另一类别的数据。但经过打乱之后数据的排列就会拥有一定的随机性，在顺序读取的时候下一次得到的样本为任何一类型的数据的可能性相同。</p>
+<ul>
+<li>Shuffle可以防止训练过程中的模型抖动，有利于模型的健壮性</li>
+</ul>
+<p>假设训练数据分为两类，在未经过Shuffle的训练时，首先模型的参数会去拟合第一类数据，当大量的连续数据（第一类）输入训练时，会造成模型在第一类数据上的过拟合。当第一类数据学习结束后模型又开始对大量的第二类数据进行学习，这样会使模型尽力去逼近第二类数据，造成新的过拟合现象。这样反复的训练模型会在两种过拟合之间徘徊，造成模型的抖动，也不利于模型的收敛和训练的快速收敛</p>
+<ul>
+<li>Shuffle可以防止过拟合，并且使得模型学到更加正确的特征</li>
+</ul>
+<p>神经网络的学习能力很强，如果数据未经过打乱，则模型反复依次序学习数据的特征，很快就会达到过拟合状态，并且有可能学会的只是数据的次序特征。模型的缺乏泛化能力。</p>
+<ul>
+<li>为使得训练集，验证集，测试集中数据分布类似  但是模型本身就为序列模型，则数据集的次序特征为数据的主要特征，并且模型需要学到这种次序规律时，则不可以使用Shuffle。否则会将数据集中的特征破坏。</li>
+</ul>
+<h3 id="2-模型建立"><a href="#2-模型建立" class="headerlink" title="2.模型建立"></a>2.模型建立</h3><h4 id="a-输入层和输出层应该是什么层-为什么"><a href="#a-输入层和输出层应该是什么层-为什么" class="headerlink" title="(a) 输入层和输出层应该是什么层?为什么?"></a>(a) 输入层和输出层应该是什么层?为什么?</h4><p>输入层：输入变量，有时称为可见层。输出层：生成输出变量的节点层。</p>
+<h4 id="b-隐藏层应该有多少层-过多或过少分别会带来什么问题"><a href="#b-隐藏层应该有多少层-过多或过少分别会带来什么问题" class="headerlink" title="(b) 隐藏层应该有多少层?过多或过少分别会带来什么问题?"></a>(b) 隐藏层应该有多少层?过多或过少分别会带来什么问题?</h4><p>本次实验隐藏层用了两层，增加隐层数可以降低网络误差，提高精度，但也使网络复杂化，从而增加了网络的训练时间和出现“过拟合”的倾向，反之隐藏层过少会无法学习数据的特征，导致模型效果不佳。</p>
+<h4 id="c-除了全连接网络-MLP-，还可以使用什么网络模块来解决这个问题？"><a href="#c-除了全连接网络-MLP-，还可以使用什么网络模块来解决这个问题？" class="headerlink" title="(c) 除了全连接网络(MLP)，还可以使用什么网络模块来解决这个问题？"></a>(c) 除了全连接网络(MLP)，还可以使用什么网络模块来解决这个问题？</h4><p>除了MLP还可以使用LSTM等时序网络结构来解决这个问题</p>
+<h4 id="d-【代码题】请用至少一种其它网络模块来搭建网络，并和-MLP-网络对比优缺点。"><a href="#d-【代码题】请用至少一种其它网络模块来搭建网络，并和-MLP-网络对比优缺点。" class="headerlink" title="(d)【代码题】请用至少一种其它网络模块来搭建网络，并和 MLP 网络对比优缺点。"></a>(d)【代码题】请用至少一种其它网络模块来搭建网络，并和 MLP 网络对比优缺点。</h4><h5 id="i-注意-本题不要求手写网络的同学进行实践"><a href="#i-注意-本题不要求手写网络的同学进行实践" class="headerlink" title="i. 注意:本题不要求手写网络的同学进行实践"></a>i. 注意:本题不要求手写网络的同学进行实践</h5><h5 id="ii-如果本身没有选择-MLP-来搭建模型，在本题中，则搭建-MLP-模型来完成预测任务"><a href="#ii-如果本身没有选择-MLP-来搭建模型，在本题中，则搭建-MLP-模型来完成预测任务" class="headerlink" title="ii. 如果本身没有选择 MLP 来搭建模型，在本题中，则搭建 MLP 模型来完成预测任务"></a>ii. 如果本身没有选择 MLP 来搭建模型，在本题中，则搭建 MLP 模型来完成预测任务</h5><h5 id="MLP："><a href="#MLP：" class="headerlink" title="MLP："></a>MLP：</h5><p>随着神经网络层数的加深，优化函数越来越容易陷入局部最优解。利用有限数据训练的深层网络，性能还不如较浅层网络。而且随着网络层数增加，“梯度消失”现象更加严重。</p>
+<h5 id="LSTM："><a href="#LSTM：" class="headerlink" title="LSTM："></a>LSTM：</h5><p>MLP并不完全适用于学习时间序列，且效果也不一定好。对时间序列敏感的问题而言，RNN(如LSTM)通常会比较合适。RNN用于序列数据，并且有了一定的记忆效应；但是LSTM计算费时。每一个LSTM的cell里面都意味着有4个全连接层(MLP),如果LSTM的时间跨度很大，并且网络又很深，这个计算量会很大，很耗时。</p>
+<br/>
+
+<h3 id="3-损失函数"><a href="#3-损失函数" class="headerlink" title="3.损失函数"></a>3.损失函数</h3><h4 id="a-mean-absolute-error-MAE-和-mean-squared-error-MSE-做损失函数有区别吗？请简单分析一下。"><a href="#a-mean-absolute-error-MAE-和-mean-squared-error-MSE-做损失函数有区别吗？请简单分析一下。" class="headerlink" title="(a) mean absolute error(MAE)和 mean squared error(MSE)做损失函数有区别吗？请简单分析一下。"></a>(a) mean absolute error(MAE)和 mean squared error(MSE)做损失函数有区别吗？请简单分析一下。</h4><p>MSE可以更快收敛：MSE的损失梯度为$-y_i$，MAE的损失梯度为+-1，也就是说MSE的梯度大小会随着误差大小变化，而MAE的梯度则一直保持为1(即使是在绝对误差很小的情况下)。MAE损失对于绝对误差是线性关系，MSE是平方关系。当误差非常大的时候，MSE损失会远远大于MAE，导致对模型的影响比较大。</p>
+<h4 id="b-【代码题】请分别用这两种损失函数进行训练，对比模型的指标表现，并分析原因。"><a href="#b-【代码题】请分别用这两种损失函数进行训练，对比模型的指标表现，并分析原因。" class="headerlink" title="(b)【代码题】请分别用这两种损失函数进行训练，对比模型的指标表现，并分析原因。"></a>(b)【代码题】请分别用这两种损失函数进行训练，对比模型的指标表现，并分析原因。</h4><p>MSE损失函数效果较MAE的好，数聚集中被污染的数据较少，所以在梯度下降方面MSE的效果由于MAE。而MAE更新的梯度始终相同，也就是说，即使对于很小的损失值，梯度也很大。这样不利于模型的学习。</p>
+<h4 id="c-如果让你改进损失函数，你会如何改进-指出当前损失函数存在的问题，-并提出一个解决方案。无需具体证明"><a href="#c-如果让你改进损失函数，你会如何改进-指出当前损失函数存在的问题，-并提出一个解决方案。无需具体证明" class="headerlink" title="(c) 如果让你改进损失函数，你会如何改进?(指出当前损失函数存在的问题， 并提出一个解决方案。无需具体证明)"></a>(c) 如果让你改进损失函数，你会如何改进?(指出当前损失函数存在的问题， 并提出一个解决方案。无需具体证明)</h4><p>MSE在损失接近与0时，梯度比较小，所以可以适当提高学习率。</p>
+<h3 id="4-优化方法"><a href="#4-优化方法" class="headerlink" title="4.优化方法"></a>4.优化方法</h3><h4 id="a-你选择了什么优化方法-例如-SGD，Adam-等-？为什么？"><a href="#a-你选择了什么优化方法-例如-SGD，Adam-等-？为什么？" class="headerlink" title="(a) 你选择了什么优化方法(例如 SGD，Adam 等)？为什么？"></a>(a) 你选择了什么优化方法(例如 SGD，Adam 等)？为什么？</h4><p>我采用的是SGD，SGD简单且有效</p>
+<h4 id="b-在-SGD-上增加动量会改变模型性能吗？为什么"><a href="#b-在-SGD-上增加动量会改变模型性能吗？为什么" class="headerlink" title="(b) 在 SGD 上增加动量会改变模型性能吗？为什么?"></a>(b) 在 SGD 上增加动量会改变模型性能吗？为什么?</h4><p>在本次实验上，我通过增加动量模型的性能并无提升，可能和参数$\beta$的选取有关，我分别尝试了0.9和0.1，发现在0.9时效果比SGD较差，0.1时模型效果差不多。</p>
+<h3 id="5-训练"><a href="#5-训练" class="headerlink" title="5.训练"></a>5.训练</h3><h4 id="a-在上述所有尝试过的模型中，请分别汇报训练集和验证集的损失"><a href="#a-在上述所有尝试过的模型中，请分别汇报训练集和验证集的损失" class="headerlink" title="(a) 在上述所有尝试过的模型中，请分别汇报训练集和验证集的损失"></a>(a) 在上述所有尝试过的模型中，请分别汇报训练集和验证集的损失</h4><table>
+<thead>
+<tr>
+<th align="center">模型名称</th>
+<th align="center">训练集loss</th>
+<th align="center">验证集loss</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">MSE+MLP+SGD</td>
+<td align="center">0.008243</td>
+<td align="center">0.008250</td>
+</tr>
+<tr>
+<td align="center">MAE+MLP+SGD</td>
+<td align="center">0.061002</td>
+<td align="center">0.056368</td>
+</tr>
+<tr>
+<td align="center">MSE+MLP+SGD(动量 )$\beta =0.1$</td>
+<td align="center">0.008319</td>
+<td align="center">0.008316</td>
+</tr>
+<tr>
+<td align="center">MAE+MLP+SGD(动量 )$\beta =0.1$</td>
+<td align="center">0.061184</td>
+<td align="center">0.056679</td>
+</tr>
+<tr>
+<td align="center">MSE+LSTM +Adam</td>
+<td align="center">0.022204</td>
+<td align="center">/</td>
+</tr>
+</tbody></table>
+<h4 id="b-在上述所有尝试过的模型中，请分别汇报训练集和验证集的-sMAPE"><a href="#b-在上述所有尝试过的模型中，请分别汇报训练集和验证集的-sMAPE" class="headerlink" title="(b) 在上述所有尝试过的模型中，请分别汇报训练集和验证集的 sMAPE"></a>(b) 在上述所有尝试过的模型中，请分别汇报训练集和验证集的 sMAPE</h4><table>
+<thead>
+<tr>
+<th align="center">模型名称</th>
+<th align="center">训练集sMAPE</th>
+<th align="center">验证集sMAPE</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">MSE+MLP+SGD</td>
+<td align="center">27.11</td>
+<td align="center">26.20</td>
+</tr>
+<tr>
+<td align="center">MAE+MLP+SGD</td>
+<td align="center">27.83</td>
+<td align="center">24.78</td>
+</tr>
+<tr>
+<td align="center">MSE+MLP+SGD(动量 )$\beta =0.1$</td>
+<td align="center">27.22</td>
+<td align="center">26.28</td>
+</tr>
+<tr>
+<td align="center">MAE+MLP+SGD(动量 )$\beta =0.1$</td>
+<td align="center">27.93</td>
+<td align="center">24.89</td>
+</tr>
+<tr>
+<td align="center">MSE+LSTM +Adam</td>
+<td align="center">26.102</td>
+<td align="center">/</td>
+</tr>
+</tbody></table>
+<br/>
+
+<h3 id="6-测试"><a href="#6-测试" class="headerlink" title="6.测试"></a>6.测试</h3><h4 id="a-在上述的尝试中，请汇报测试集上的最优损失，请标明模型，损失函数和优化方法"><a href="#a-在上述的尝试中，请汇报测试集上的最优损失，请标明模型，损失函数和优化方法" class="headerlink" title="(a) 在上述的尝试中，请汇报测试集上的最优损失，请标明模型，损失函数和优化方法"></a>(a) 在上述的尝试中，请汇报测试集上的最优损失，请标明模型，损失函数和优化方法</h4><table>
+<thead>
+<tr>
+<th align="center">模型名称</th>
+<th align="center">测试集损失</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">MLP+MSE+SGD</td>
+<td align="center">0.008243</td>
+</tr>
+</tbody></table>
+<h4 id="b-在上述的尝试中，请汇报测试集上的最优-sMAPE，请标明模型，损失函数和优化方法"><a href="#b-在上述的尝试中，请汇报测试集上的最优-sMAPE，请标明模型，损失函数和优化方法" class="headerlink" title="(b) 在上述的尝试中，请汇报测试集上的最优 sMAPE，请标明模型，损失函数和优化方法"></a>(b) 在上述的尝试中，请汇报测试集上的最优 sMAPE，请标明模型，损失函数和优化方法</h4><br/>
+
+<table>
+<thead>
+<tr>
+<th align="center">模型名称</th>
+<th align="center">测试集sMAPE</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">LSTM+MSE+Adam</td>
+<td align="center">26.385</td>
+</tr>
+</tbody></table>
+<h3 id="7-不同训练长度的测试结果对比"><a href="#7-不同训练长度的测试结果对比" class="headerlink" title="7.不同训练长度的测试结果对比"></a>7.不同训练长度的测试结果对比</h3><h4 id="a-【代码题】请至少尝试三种输入长度，对网络进行训练和测试。"><a href="#a-【代码题】请至少尝试三种输入长度，对网络进行训练和测试。" class="headerlink" title="(a)【代码题】请至少尝试三种输入长度，对网络进行训练和测试。"></a>(a)【代码题】请至少尝试三种输入长度，对网络进行训练和测试。</h4><br/>
+
+<table>
+<thead>
+<tr>
+<th align="center">输入长度</th>
+<th align="center">测试集sMAPE</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">56</td>
+<td align="center">27.28</td>
+</tr>
+<tr>
+<td align="center">60</td>
+<td align="center">27.25</td>
+</tr>
+<tr>
+<td align="center">70</td>
+<td align="center">29.48</td>
+</tr>
+</tbody></table>
+<h4 id="b-你认为选择输入长度的依据应该是什么？最优的是哪一个输入长度？"><a href="#b-你认为选择输入长度的依据应该是什么？最优的是哪一个输入长度？" class="headerlink" title="(b) 你认为选择输入长度的依据应该是什么？最优的是哪一个输入长度？"></a>(b) 你认为选择输入长度的依据应该是什么？最优的是哪一个输入长度？</h4><p>我认为输入长度应该大于等于输出长度，最优长度是60</p>
+<h4 id="c-输入长度的选择可以自动化吗？请给出理由。"><a href="#c-输入长度的选择可以自动化吗？请给出理由。" class="headerlink" title="(c) 输入长度的选择可以自动化吗？请给出理由。"></a>(c) 输入长度的选择可以自动化吗？请给出理由。</h4><p>输入长度的选择应该可以自动化，输入长度其实也是一个超参数，现有的工具已经可以对超参数的选取起到很大的帮助。</p>
+<h4 id="d-总结汇报最优的训练-验证-测试集损失和-sMAPE，请标明输入长度，模型，损失函数和优化方法"><a href="#d-总结汇报最优的训练-验证-测试集损失和-sMAPE，请标明输入长度，模型，损失函数和优化方法" class="headerlink" title="(d) 总结汇报最优的训练/验证/测试集损失和 sMAPE，请标明输入长度，模型，损失函数和优化方法"></a>(d) 总结汇报最优的训练/验证/测试集损失和 sMAPE，请标明输入长度，模型，损失函数和优化方法</h4><table>
+<thead>
+<tr>
+<th align="center">模型名</th>
+<th align="center">训练集loss</th>
+<th align="center">训练集sMAPE</th>
+<th align="center">验证集loss</th>
+<th align="center">验证集sMAPE</th>
+<th align="center">测试集损失</th>
+<th align="center">测试集sMAPE</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">60+MLP+MSE+SGD</td>
+<td align="center">0.008243</td>
+<td align="center">27.11</td>
+<td align="center">0.008250</td>
+<td align="center">26.20</td>
+<td align="center">0.029185</td>
+<td align="center">27.26</td>
+</tr>
+</tbody></table>
+
+      
+    </div>
+    <div>
+      
+        <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+    
+</div>
+
+      
+    </div>
+
+    
+    
+    
+    
+
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者</strong>
+    SanYu
+  </li>
+  <li class="post-copyright-link">
+  <strong>本文链接</strong>
+  <a target="_blank" rel="noopener" href="https://sunyums.github.io/2022/02/27/SequencePrediction/" title="SequencePrediction">https://sunyums.github.io/2022/02/27/SequencePrediction/</a>
+</li>
+
+  <li class="post-copyright-license">
+    <strong>版权声明 </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
+    
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/homework/" rel="tag"><i class="fa fa-tag"></i> homework</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2022/02/27/MNIST/" rel="next" title="Minst">
+                <i class="fa fa-chevron-left"></i> Minst
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/avatar.jpg"
+                alt="" />
+            
+              <p class="site-author-name" itemprop="name"></p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/%7C%7C%20archive">
+              
+                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">1</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/SunYuMs" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:431500288@qq.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-block">
+              <div class="links-of-blogroll-title">
+                <!-- modify icon to fire by szw -->
+                <i class="fa fa-history fa-" aria-hidden="true"></i>
+                近期文章
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                
+                  <li class="recent_posts_li">
+                    <a href="/2022/02/27/SequencePrediction/" title="SequencePrediction" target="_blank">SequencePrediction</a>
+                  </li>
+                
+                  <li class="recent_posts_li">
+                    <a href="/2022/02/27/MNIST/" title="Minst" target="_blank">Minst</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E6%95%B0%E6%8D%AE%E9%A2%84%E5%A4%84%E7%90%86"><span class="nav-number">1.</span> <span class="nav-text">1.数据预处理</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#a-%E4%B8%BA%E4%BB%80%E4%B9%88%E9%9C%80%E8%A6%81%E9%AA%8C%E8%AF%81%E9%9B%86%EF%BC%9F"><span class="nav-number">1.1.</span> <span class="nav-text">(a) 为什么需要验证集？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#b-%E5%BA%94%E8%AF%A5%E5%A6%82%E4%BD%95%E9%80%89%E5%8F%96%E9%AA%8C%E8%AF%81%E9%9B%86%EF%BC%8C%E9%AA%8C%E8%AF%81%E9%9B%86%E5%92%8C%E6%B5%8B%E8%AF%95%E9%9B%86%E5%BA%94%E8%AF%A5%E6%9C%89%E4%BB%80%E4%B9%88%E8%81%94%E7%B3%BB"><span class="nav-number">1.2.</span> <span class="nav-text">(b) 应该如何选取验证集，验证集和测试集应该有什么联系?</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#c-%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E5%9C%A8%E5%88%87%E5%88%86%E6%95%B0%E6%8D%AE%E5%90%8E%E5%86%8D%E5%88%92%E5%88%86%E8%AE%AD%E7%BB%83%E5%92%8C%E9%AA%8C%E8%AF%81%E9%9B%86%EF%BC%9F%E7%9B%B4%E6%8E%A5%E5%9C%A8%E5%8E%9F%E5%A7%8B%E7%9A%84%E6%97%B6%E9%97%B4%E5%BA%8F%E5%88%97%E4%B8%AD%EF%BC%8C%E5%88%92%E5%88%86%E5%87%A0%E6%9D%A1%E4%BD%9C%E4%B8%BA%E9%AA%8C%E8%AF%81%E9%9B%86%E4%BC%9A%E5%87%BA%E7%8E%B0%E4%BB%80%E4%B9%88%E9%97%AE%E9%A2%98%EF%BC%9F"><span class="nav-number">1.3.</span> <span class="nav-text">(c) 为什么要在切分数据后再划分训练和验证集？直接在原始的时间序列中，划分几条作为验证集会出现什么问题？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#d-%E6%95%B0%E6%8D%AE%E5%8F%82%E4%B8%8E%E8%AE%AD%E7%BB%83%E7%9A%84%E6%97%B6%E5%80%99%E6%89%93%E4%B9%B1%E9%A1%BA%E5%BA%8F-shuffle-%E8%BE%93%E5%85%A5%E6%A8%A1%E5%9E%8B%EF%BC%8C%E4%BC%9A%E6%9C%89%E4%BB%80%E4%B9%88%E5%A5%BD%E5%A4%84%EF%BC%8C%E4%BB%80%E4%B9%88%E5%9D%8F%E5%A4%84%EF%BC%9F"><span class="nav-number">1.4.</span> <span class="nav-text">(d) 数据参与训练的时候打乱顺序(shuffle)输入模型，会有什么好处，什么坏处？</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E6%A8%A1%E5%9E%8B%E5%BB%BA%E7%AB%8B"><span class="nav-number">2.</span> <span class="nav-text">2.模型建立</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#a-%E8%BE%93%E5%85%A5%E5%B1%82%E5%92%8C%E8%BE%93%E5%87%BA%E5%B1%82%E5%BA%94%E8%AF%A5%E6%98%AF%E4%BB%80%E4%B9%88%E5%B1%82-%E4%B8%BA%E4%BB%80%E4%B9%88"><span class="nav-number">2.1.</span> <span class="nav-text">(a) 输入层和输出层应该是什么层?为什么?</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#b-%E9%9A%90%E8%97%8F%E5%B1%82%E5%BA%94%E8%AF%A5%E6%9C%89%E5%A4%9A%E5%B0%91%E5%B1%82-%E8%BF%87%E5%A4%9A%E6%88%96%E8%BF%87%E5%B0%91%E5%88%86%E5%88%AB%E4%BC%9A%E5%B8%A6%E6%9D%A5%E4%BB%80%E4%B9%88%E9%97%AE%E9%A2%98"><span class="nav-number">2.2.</span> <span class="nav-text">(b) 隐藏层应该有多少层?过多或过少分别会带来什么问题?</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#c-%E9%99%A4%E4%BA%86%E5%85%A8%E8%BF%9E%E6%8E%A5%E7%BD%91%E7%BB%9C-MLP-%EF%BC%8C%E8%BF%98%E5%8F%AF%E4%BB%A5%E4%BD%BF%E7%94%A8%E4%BB%80%E4%B9%88%E7%BD%91%E7%BB%9C%E6%A8%A1%E5%9D%97%E6%9D%A5%E8%A7%A3%E5%86%B3%E8%BF%99%E4%B8%AA%E9%97%AE%E9%A2%98%EF%BC%9F"><span class="nav-number">2.3.</span> <span class="nav-text">(c) 除了全连接网络(MLP)，还可以使用什么网络模块来解决这个问题？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#d-%E3%80%90%E4%BB%A3%E7%A0%81%E9%A2%98%E3%80%91%E8%AF%B7%E7%94%A8%E8%87%B3%E5%B0%91%E4%B8%80%E7%A7%8D%E5%85%B6%E5%AE%83%E7%BD%91%E7%BB%9C%E6%A8%A1%E5%9D%97%E6%9D%A5%E6%90%AD%E5%BB%BA%E7%BD%91%E7%BB%9C%EF%BC%8C%E5%B9%B6%E5%92%8C-MLP-%E7%BD%91%E7%BB%9C%E5%AF%B9%E6%AF%94%E4%BC%98%E7%BC%BA%E7%82%B9%E3%80%82"><span class="nav-number">2.4.</span> <span class="nav-text">(d)【代码题】请用至少一种其它网络模块来搭建网络，并和 MLP 网络对比优缺点。</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#i-%E6%B3%A8%E6%84%8F-%E6%9C%AC%E9%A2%98%E4%B8%8D%E8%A6%81%E6%B1%82%E6%89%8B%E5%86%99%E7%BD%91%E7%BB%9C%E7%9A%84%E5%90%8C%E5%AD%A6%E8%BF%9B%E8%A1%8C%E5%AE%9E%E8%B7%B5"><span class="nav-number">2.4.1.</span> <span class="nav-text">i. 注意:本题不要求手写网络的同学进行实践</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#ii-%E5%A6%82%E6%9E%9C%E6%9C%AC%E8%BA%AB%E6%B2%A1%E6%9C%89%E9%80%89%E6%8B%A9-MLP-%E6%9D%A5%E6%90%AD%E5%BB%BA%E6%A8%A1%E5%9E%8B%EF%BC%8C%E5%9C%A8%E6%9C%AC%E9%A2%98%E4%B8%AD%EF%BC%8C%E5%88%99%E6%90%AD%E5%BB%BA-MLP-%E6%A8%A1%E5%9E%8B%E6%9D%A5%E5%AE%8C%E6%88%90%E9%A2%84%E6%B5%8B%E4%BB%BB%E5%8A%A1"><span class="nav-number">2.4.2.</span> <span class="nav-text">ii. 如果本身没有选择 MLP 来搭建模型，在本题中，则搭建 MLP 模型来完成预测任务</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#MLP%EF%BC%9A"><span class="nav-number">2.4.3.</span> <span class="nav-text">MLP：</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#LSTM%EF%BC%9A"><span class="nav-number">2.4.4.</span> <span class="nav-text">LSTM：</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0"><span class="nav-number">3.</span> <span class="nav-text">3.损失函数</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#a-mean-absolute-error-MAE-%E5%92%8C-mean-squared-error-MSE-%E5%81%9A%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0%E6%9C%89%E5%8C%BA%E5%88%AB%E5%90%97%EF%BC%9F%E8%AF%B7%E7%AE%80%E5%8D%95%E5%88%86%E6%9E%90%E4%B8%80%E4%B8%8B%E3%80%82"><span class="nav-number">3.1.</span> <span class="nav-text">(a) mean absolute error(MAE)和 mean squared error(MSE)做损失函数有区别吗？请简单分析一下。</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#b-%E3%80%90%E4%BB%A3%E7%A0%81%E9%A2%98%E3%80%91%E8%AF%B7%E5%88%86%E5%88%AB%E7%94%A8%E8%BF%99%E4%B8%A4%E7%A7%8D%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0%E8%BF%9B%E8%A1%8C%E8%AE%AD%E7%BB%83%EF%BC%8C%E5%AF%B9%E6%AF%94%E6%A8%A1%E5%9E%8B%E7%9A%84%E6%8C%87%E6%A0%87%E8%A1%A8%E7%8E%B0%EF%BC%8C%E5%B9%B6%E5%88%86%E6%9E%90%E5%8E%9F%E5%9B%A0%E3%80%82"><span class="nav-number">3.2.</span> <span class="nav-text">(b)【代码题】请分别用这两种损失函数进行训练，对比模型的指标表现，并分析原因。</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#c-%E5%A6%82%E6%9E%9C%E8%AE%A9%E4%BD%A0%E6%94%B9%E8%BF%9B%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0%EF%BC%8C%E4%BD%A0%E4%BC%9A%E5%A6%82%E4%BD%95%E6%94%B9%E8%BF%9B-%E6%8C%87%E5%87%BA%E5%BD%93%E5%89%8D%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0%E5%AD%98%E5%9C%A8%E7%9A%84%E9%97%AE%E9%A2%98%EF%BC%8C-%E5%B9%B6%E6%8F%90%E5%87%BA%E4%B8%80%E4%B8%AA%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88%E3%80%82%E6%97%A0%E9%9C%80%E5%85%B7%E4%BD%93%E8%AF%81%E6%98%8E"><span class="nav-number">3.3.</span> <span class="nav-text">(c) 如果让你改进损失函数，你会如何改进?(指出当前损失函数存在的问题， 并提出一个解决方案。无需具体证明)</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-%E4%BC%98%E5%8C%96%E6%96%B9%E6%B3%95"><span class="nav-number">4.</span> <span class="nav-text">4.优化方法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#a-%E4%BD%A0%E9%80%89%E6%8B%A9%E4%BA%86%E4%BB%80%E4%B9%88%E4%BC%98%E5%8C%96%E6%96%B9%E6%B3%95-%E4%BE%8B%E5%A6%82-SGD%EF%BC%8CAdam-%E7%AD%89-%EF%BC%9F%E4%B8%BA%E4%BB%80%E4%B9%88%EF%BC%9F"><span class="nav-number">4.1.</span> <span class="nav-text">(a) 你选择了什么优化方法(例如 SGD，Adam 等)？为什么？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#b-%E5%9C%A8-SGD-%E4%B8%8A%E5%A2%9E%E5%8A%A0%E5%8A%A8%E9%87%8F%E4%BC%9A%E6%94%B9%E5%8F%98%E6%A8%A1%E5%9E%8B%E6%80%A7%E8%83%BD%E5%90%97%EF%BC%9F%E4%B8%BA%E4%BB%80%E4%B9%88"><span class="nav-number">4.2.</span> <span class="nav-text">(b) 在 SGD 上增加动量会改变模型性能吗？为什么?</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-%E8%AE%AD%E7%BB%83"><span class="nav-number">5.</span> <span class="nav-text">5.训练</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#a-%E5%9C%A8%E4%B8%8A%E8%BF%B0%E6%89%80%E6%9C%89%E5%B0%9D%E8%AF%95%E8%BF%87%E7%9A%84%E6%A8%A1%E5%9E%8B%E4%B8%AD%EF%BC%8C%E8%AF%B7%E5%88%86%E5%88%AB%E6%B1%87%E6%8A%A5%E8%AE%AD%E7%BB%83%E9%9B%86%E5%92%8C%E9%AA%8C%E8%AF%81%E9%9B%86%E7%9A%84%E6%8D%9F%E5%A4%B1"><span class="nav-number">5.1.</span> <span class="nav-text">(a) 在上述所有尝试过的模型中，请分别汇报训练集和验证集的损失</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#b-%E5%9C%A8%E4%B8%8A%E8%BF%B0%E6%89%80%E6%9C%89%E5%B0%9D%E8%AF%95%E8%BF%87%E7%9A%84%E6%A8%A1%E5%9E%8B%E4%B8%AD%EF%BC%8C%E8%AF%B7%E5%88%86%E5%88%AB%E6%B1%87%E6%8A%A5%E8%AE%AD%E7%BB%83%E9%9B%86%E5%92%8C%E9%AA%8C%E8%AF%81%E9%9B%86%E7%9A%84-sMAPE"><span class="nav-number">5.2.</span> <span class="nav-text">(b) 在上述所有尝试过的模型中，请分别汇报训练集和验证集的 sMAPE</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-%E6%B5%8B%E8%AF%95"><span class="nav-number">6.</span> <span class="nav-text">6.测试</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#a-%E5%9C%A8%E4%B8%8A%E8%BF%B0%E7%9A%84%E5%B0%9D%E8%AF%95%E4%B8%AD%EF%BC%8C%E8%AF%B7%E6%B1%87%E6%8A%A5%E6%B5%8B%E8%AF%95%E9%9B%86%E4%B8%8A%E7%9A%84%E6%9C%80%E4%BC%98%E6%8D%9F%E5%A4%B1%EF%BC%8C%E8%AF%B7%E6%A0%87%E6%98%8E%E6%A8%A1%E5%9E%8B%EF%BC%8C%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0%E5%92%8C%E4%BC%98%E5%8C%96%E6%96%B9%E6%B3%95"><span class="nav-number">6.1.</span> <span class="nav-text">(a) 在上述的尝试中，请汇报测试集上的最优损失，请标明模型，损失函数和优化方法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#b-%E5%9C%A8%E4%B8%8A%E8%BF%B0%E7%9A%84%E5%B0%9D%E8%AF%95%E4%B8%AD%EF%BC%8C%E8%AF%B7%E6%B1%87%E6%8A%A5%E6%B5%8B%E8%AF%95%E9%9B%86%E4%B8%8A%E7%9A%84%E6%9C%80%E4%BC%98-sMAPE%EF%BC%8C%E8%AF%B7%E6%A0%87%E6%98%8E%E6%A8%A1%E5%9E%8B%EF%BC%8C%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0%E5%92%8C%E4%BC%98%E5%8C%96%E6%96%B9%E6%B3%95"><span class="nav-number">6.2.</span> <span class="nav-text">(b) 在上述的尝试中，请汇报测试集上的最优 sMAPE，请标明模型，损失函数和优化方法</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7-%E4%B8%8D%E5%90%8C%E8%AE%AD%E7%BB%83%E9%95%BF%E5%BA%A6%E7%9A%84%E6%B5%8B%E8%AF%95%E7%BB%93%E6%9E%9C%E5%AF%B9%E6%AF%94"><span class="nav-number">7.</span> <span class="nav-text">7.不同训练长度的测试结果对比</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#a-%E3%80%90%E4%BB%A3%E7%A0%81%E9%A2%98%E3%80%91%E8%AF%B7%E8%87%B3%E5%B0%91%E5%B0%9D%E8%AF%95%E4%B8%89%E7%A7%8D%E8%BE%93%E5%85%A5%E9%95%BF%E5%BA%A6%EF%BC%8C%E5%AF%B9%E7%BD%91%E7%BB%9C%E8%BF%9B%E8%A1%8C%E8%AE%AD%E7%BB%83%E5%92%8C%E6%B5%8B%E8%AF%95%E3%80%82"><span class="nav-number">7.1.</span> <span class="nav-text">(a)【代码题】请至少尝试三种输入长度，对网络进行训练和测试。</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#b-%E4%BD%A0%E8%AE%A4%E4%B8%BA%E9%80%89%E6%8B%A9%E8%BE%93%E5%85%A5%E9%95%BF%E5%BA%A6%E7%9A%84%E4%BE%9D%E6%8D%AE%E5%BA%94%E8%AF%A5%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9F%E6%9C%80%E4%BC%98%E7%9A%84%E6%98%AF%E5%93%AA%E4%B8%80%E4%B8%AA%E8%BE%93%E5%85%A5%E9%95%BF%E5%BA%A6%EF%BC%9F"><span class="nav-number">7.2.</span> <span class="nav-text">(b) 你认为选择输入长度的依据应该是什么？最优的是哪一个输入长度？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#c-%E8%BE%93%E5%85%A5%E9%95%BF%E5%BA%A6%E7%9A%84%E9%80%89%E6%8B%A9%E5%8F%AF%E4%BB%A5%E8%87%AA%E5%8A%A8%E5%8C%96%E5%90%97%EF%BC%9F%E8%AF%B7%E7%BB%99%E5%87%BA%E7%90%86%E7%94%B1%E3%80%82"><span class="nav-number">7.3.</span> <span class="nav-text">(c) 输入长度的选择可以自动化吗？请给出理由。</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#d-%E6%80%BB%E7%BB%93%E6%B1%87%E6%8A%A5%E6%9C%80%E4%BC%98%E7%9A%84%E8%AE%AD%E7%BB%83-%E9%AA%8C%E8%AF%81-%E6%B5%8B%E8%AF%95%E9%9B%86%E6%8D%9F%E5%A4%B1%E5%92%8C-sMAPE%EF%BC%8C%E8%AF%B7%E6%A0%87%E6%98%8E%E8%BE%93%E5%85%A5%E9%95%BF%E5%BA%A6%EF%BC%8C%E6%A8%A1%E5%9E%8B%EF%BC%8C%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0%E5%92%8C%E4%BC%98%E5%8C%96%E6%96%B9%E6%B3%95"><span class="nav-number">7.4.</span> <span class="nav-text">(d) 总结汇报最优的训练&#x2F;验证&#x2F;测试集损失和 sMAPE，请标明输入长度，模型，损失函数和优化方法</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">SanYu</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">Site words total count&#58;</span>
+    
+    <span title="Site words total count">3.2k</span>
+  
+</div>
+<!--
+<div class="footer-custom">xxx</div>
+-->
+
+
+
+<!--
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+-->
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+    
+      <div id="needsharebutton-float">
+        <span class="btn">
+          <i class="fa fa-share-alt" aria-hidden="true"></i>
+        </span>
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+  
+  <script type="text/javascript">
+    var GUEST = ['nick','mail','link'];
+    var guest = 'nick';
+    guest = guest.split(',').filter(item=>{
+      return GUEST.indexOf(item)>-1;
+    });
+    new Valine({
+        el: '#comments' ,
+        verify: false,
+        notify: false,
+        appId: 'tbda6tCC8BcFDI8h3G00uG3n-gzGzoHsz',
+        appKey: 'UaIgiWxJpRerOQ1ua2TKz4pQ',
+        placeholder: '让我们在交流中进步',
+        avatar:'monsterid',
+        guest_info:guest,
+        pageSize:'10' || 10,
+    });
+  </script>
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/needsharebutton/needsharebutton.css">
+
+  
+  
+  <script src="/lib/needsharebutton/needsharebutton.js"></script>
+
+  <script>
+    
+    
+      flOptions = {};
+      
+          flOptions.iconStyle = "box";
+      
+          flOptions.boxForm = "horizontal";
+      
+          flOptions.position = "middleRight";
+      
+          flOptions.networks = "Weibo,Wechat,Douban,QQZone,Twitter,Facebook";
+      
+      new needShareButton('#needsharebutton-float', flOptions);
+    
+  </script>
+
+  
+
+  
+  
+
+
+  
+
+  
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"log":false,"model":{"jsonPath":"/live2dw/assets/assets/wanko.model.json"},"display":{"position":"lift","width":150,"height":300},"mobile":{"show":true}});</script></body>
+</html>
