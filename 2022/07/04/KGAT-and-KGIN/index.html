@@ -75,7 +75,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="Knowledge,Recommendation," />
 
 
 
@@ -88,16 +88,45 @@
 
 
 
-<meta name="description" content="图神经网络、推荐系统、机器学习">
-<meta property="og:type" content="website">
-<meta property="og:title" content="SunYu">
-<meta property="og:url" content="http://example.com/archives/2022/02/index.html">
+<meta name="description" content="KGAT: Knowledge Graph Attention Network for Recommendation  知识图谱增强推荐的介绍:      **如图所示，我们一般在传统推荐系统(协同过滤)中拥有交互信息(user--item),但是不可避免会遇到冷启动以及数据稀疏问题，所以这时就要采用额外的辅助信息(side infomation)来帮助学习，知识图谱就作为其中一种，来辅助学习em">
+<meta property="og:type" content="article">
+<meta property="og:title" content="KGAT-and-KGIN">
+<meta property="og:url" content="http://example.com/2022/07/04/KGAT-and-KGIN/index.html">
 <meta property="og:site_name" content="SunYu">
-<meta property="og:description" content="图神经网络、推荐系统、机器学习">
+<meta property="og:description" content="KGAT: Knowledge Graph Attention Network for Recommendation  知识图谱增强推荐的介绍:      **如图所示，我们一般在传统推荐系统(协同过滤)中拥有交互信息(user--item),但是不可避免会遇到冷启动以及数据稀疏问题，所以这时就要采用额外的辅助信息(side infomation)来帮助学习，知识图谱就作为其中一种，来辅助学习em">
 <meta property="og:locale">
+<meta property="og:image" content="http://example.com/2022/07/04/KGAT-and-KGIN/9300fbb2eed78f16d802401cbc880b23.png">
+<meta property="og:image" content="http://example.com/2022/07/04/KGAT-and-KGIN/2373f21c1b9d62412ce22ef308dd5e0d.png">
+<meta property="og:image" content="http://example.com/2022/07/04/KGAT-and-KGIN/bb4beac4f97439026731ca9b5d8235bd.png">
+<meta property="og:image" content="http://example.com/2022/07/04/KGAT-and-KGIN/e198e24cc42aed31f80ebe834c3cb8e9.png">
+<meta property="og:image" content="http://example.com/2022/07/04/KGAT-and-KGIN/62b22e16a7ba456f3505f607ad46a325.png">
+<meta property="og:image" content="http://example.com/2022/07/04/KGAT-and-KGIN/5c8900d82ff0049c55115f5816bd197f.png">
+<meta property="og:image" content="http://example.com/2022/07/04/KGAT-and-KGIN/2633d629c9d85faaab6586eedfd09058.png">
+<meta property="og:image" content="http://example.com/2022/07/04/KGAT-and-KGIN/c6c8077a4e20483e75071816121a4897.png">
+<meta property="og:image" content="http://example.com/2022/07/04/KGAT-and-KGIN/e81cd00a3b4d8431bd4d0718d4a4571f.png">
+<meta property="og:image" content="http://example.com/2022/07/04/KGAT-and-KGIN/1c9d889ad7d1125d0b348875eac1a36c.png">
+<meta property="og:image" content="http://example.com/2022/07/04/KGAT-and-KGIN/57225f066d352f43d776fc63545e7d83.png">
+<meta property="og:image" content="http://example.com/2022/07/04/KGAT-and-KGIN/b91abc01a441bb8679c42716cd2b4f45.png">
+<meta property="og:image" content="http://example.com/2022/07/04/KGAT-and-KGIN/4d6a8bd5d4697ce1f6c0dbdacd61bd9a.png">
+<meta property="og:image" content="http://example.com/2022/07/04/KGAT-and-KGIN/9e6a6abdcbf906f783eb4ab0abd19836.png">
+<meta property="og:image" content="http://example.com/2022/07/04/KGAT-and-KGIN/410fc571b0b10eae7d10e9682e88e691.png">
+<meta property="og:image" content="http://example.com/2022/07/04/KGAT-and-KGIN/fa6bdb1cfc05ed17b9005455c492b3fb.png">
+<meta property="og:image" content="http://example.com/2022/07/04/KGAT-and-KGIN/c9c518945d78cbd6642936600b29d47d.png">
+<meta property="og:image" content="http://example.com/2022/07/04/KGAT-and-KGIN/483d16bc7ae4b8869a65125f4b174ca3.png">
+<meta property="og:image" content="http://example.com/2022/07/04/KGAT-and-KGIN/227af9bfe5f0cebee130ec154c53c7d6.png">
+<meta property="og:image" content="http://example.com/2022/07/04/KGAT-and-KGIN/465a2d77e8c9751a6bb1f4c6859af613.png">
+<meta property="og:image" content="http://example.com/2022/07/04/KGAT-and-KGIN/6378067d5a3facdf14aa8ee93808bdf8.png">
+<meta property="og:image" content="http://example.com/2022/07/04/KGAT-and-KGIN/881bdce3ba3904ba1239ef6483504d35.png">
+<meta property="og:image" content="http://example.com/2022/07/04/KGAT-and-KGIN/690474494baa75623b5c2f720669c4f7.png">
+<meta property="og:image" content="http://example.com/2022/07/04/KGAT-and-KGIN/ff7a59221b2ff866c376904fccc4fc61.png">
+<meta property="og:image" content="http://example.com/2022/07/04/KGAT-and-KGIN/a3828fd65342b74c8a318106ce5c83d9.png">
+<meta property="article:published_time" content="2022-07-04T14:58:00.000Z">
+<meta property="article:modified_time" content="2022-07-04T15:13:50.667Z">
 <meta property="article:author" content="SanYu">
-<meta property="article:tag" content="图神经网络、推荐系统">
+<meta property="article:tag" content="Knowledge">
+<meta property="article:tag" content="Recommendation">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/2022/07/04/KGAT-and-KGIN/9300fbb2eed78f16d802401cbc880b23.png">
 
 
 
@@ -127,13 +156,13 @@
 
 
 
-  <link rel="canonical" href="http://example.com/archives/2022/02/"/>
+  <link rel="canonical" href="http://example.com/2022/07/04/KGAT-and-KGIN/"/>
 
 
 
 
 
-  <title>归档 | SunYu</title>
+  <title>KGAT-and-KGIN | SunYu</title>
   
 
 
@@ -152,7 +181,7 @@
     
   
 
-  <div class="container sidebar-position-left page-archive">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -290,111 +319,302 @@
           <div id="content" class="content">
             
 
+  <div id="posts" class="posts-expand">
+    
+
+  
+
   
   
   
-  <div class="post-block archive">
-    <div id="posts" class="posts-collapse">
-      <span class="archive-move-on"></span>
-
-      <span class="archive-page-counter">
-        
-        
-        
-          
-        
-        嗯..! 目前共计 3 篇日志。 继续努力。
-      </span>
-
-      
-
-        
-        
-        
-
-        
-          
-          <div class="collection-title">
-            <h1 class="archive-year" id="archive-year-2022">2022</h1>
-          </div>
-        
-        
-
-        
 
   <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/07/04/KGAT-and-KGIN/">
 
-      <h2 class="post-title">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="SunYu">
+    </span>
+
+    
+      <header class="post-header">
+
         
-            <a class="post-title-link" href="/2022/02/27/SequencePrediction/" itemprop="url">
-              
-                <span itemprop="name">SequencePrediction</span>
-              
-            </a>
         
-      </h2>
+          <h1 class="post-title" itemprop="name headline">KGAT-and-KGIN</h1>
+        
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2022-02-27T14:01:10+08:00"
-              content="2022-02-27" >
-          02-27
-        </time>
-      </div>
+        <div class="post-meta">
+          
 
-    </header>
-  </article>
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2022-07-04T22:58:00+08:00">
+                2022-07-04
+              </time>
+            
 
+            
 
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2022/07/04/KGAT-and-KGIN/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2022/07/04/KGAT-and-KGIN/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  1k
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  3
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2022/02/27/MNIST/" itemprop="url">
-              
-                <span itemprop="name">Minst</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2022-02-27T13:27:39+08:00"
-              content="2022-02-27" >
-          02-27
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
       
 
+      
+        <h2 id="KGAT-Knowledge-Graph-Attention-Network-for-Recommendation"><a href="#KGAT-Knowledge-Graph-Attention-Network-for-Recommendation" class="headerlink" title="KGAT: Knowledge Graph Attention Network for Recommendation"></a>KGAT: Knowledge Graph Attention Network for Recommendation</h2><br/>
+
+<h3 id="知识图谱增强推荐的介绍"><a href="#知识图谱增强推荐的介绍" class="headerlink" title="知识图谱增强推荐的介绍:"></a>知识图谱增强推荐的介绍:</h3><img src="9300fbb2eed78f16d802401cbc880b23.png" alt="截图" style="zoom:50%;" />
+
+<pre><code>    **如图所示，我们一般在传统推荐系统(协同过滤)中拥有交互信息(user--item),但是不可避免会遇到冷启动以及数据稀疏问题，所以这时就要采用额外的辅助信息(side infomation)来帮助学习，知识图谱就作为其中一种，来辅助学习embedding。知识图谱通常由(h,r,t)三元组构成，其中h,t为实体，r为relation，如上图的(Titanic,acted,Leonardo),一般知识图谱推荐中不太会有社交网络的信息(获取不到friend)**
+
+    **GCN之前常用基于embedding的方法和基于元路径的方法，其中基于embedding的方法基本采用TransE等知识图谱embedding学习的方法来学得item的embedding作为先验输入到协同过滤(Collaborative Filtering)模型中去:(TransE模型大致如下思想)，就是使得学得得embedding满足，h + r = t**
+</code></pre>
+<img src="2373f21c1b9d62412ce22ef308dd5e0d.png" alt="截图" style="zoom:50%;" />
+
+<pre><code>    **总结:学到了KG的语义信息**    
+
+**而基于路径得思想就是，假设存在 user 和 item 之间存在 K 个路径，针对其中的路径 p，学习到其向量表示为** $\mathbf h_&#123;\mathbf p&#125;$** ，最终的路径信息如下，其中 g 可能是 max-pooling 或者是加权的 sum-pooling：**
+</code></pre>
+<img src="bb4beac4f97439026731ca9b5d8235bd.png" alt="截图" style="zoom:50%;" />
+
+<pre><code>    **总结:学到了KG的联通信息**
+
+    **混合的方法基本就基于GCN的embedding传播思想,本文(KGAT)就是代表**
+</code></pre>
+<h3 id="本文主要思想概括"><a href="#本文主要思想概括" class="headerlink" title="本文主要思想概括:"></a>本文主要思想概括:</h3><pre><code>    **将User-Item交互矩阵变成(user,interaction,item),这种类似知识图谱的结构，其中user和item作为实体，interaction为新引入的relation 向量，这样的话，交互矩阵就可以和知识图谱成为一个整体的矩阵，最后在使用GAT的方式来聚合embedding,注意:本文使用KGE(TransR )和Recommendation任务迭代训练**
+</code></pre>
+<h3 id="collaborative-knowledge-graph-CKG-构造"><a href="#collaborative-knowledge-graph-CKG-构造" class="headerlink" title="collaborative knowledge graph (CKG)构造:"></a>collaborative knowledge graph (CKG)构造:</h3><img src="e198e24cc42aed31f80ebe834c3cb8e9.png" alt="截图" style="zoom:50%;" />
+
+<pre><code>    **如图和上述可知:构图方式就是将交互矩阵添加交互关系形成KG中的三元组**
+</code></pre>
+<h3 id="KGE学习"><a href="#KGE学习" class="headerlink" title="KGE学习:"></a>KGE学习:</h3><img src="62b22e16a7ba456f3505f607ad46a325.png" alt="截图" style="zoom:70%;" />
+
+<img src="5c8900d82ff0049c55115f5816bd197f.png" alt="截图" style="zoom:50%;" />
+
+<h3 id="GAT聚合"><a href="#GAT聚合" class="headerlink" title="GAT聚合:"></a>GAT聚合:</h3><img src="2633d629c9d85faaab6586eedfd09058.png" alt="截图" style="zoom:70%;" />
+
+<img src="c6c8077a4e20483e75071816121a4897.png" alt="截图" style="zoom:50%;" />
+
+<pre><code>    **常见的attention聚合三步骤的范式,注意在计算attrntion系数时将**$\mathbf W_&#123;\mathbf r&#125;$ **乘以** $\mathbf e_&#123;\mathbf t&#125;、\mathbf e_&#123;\mathbf r&#125;$**是为了将emedding投入到relation空间，这里relation仅仅用作计算attention系数，要和后面一篇文章做区分。最后把邻居embedding和本身的embedding合并:文章给了三种，图中画的是Bi-Interaction**
+</code></pre>
+<img src="e81cd00a3b4d8431bd4d0718d4a4571f.png" alt="截图" style="zoom:50%;" />
+
+<h3 id="模型训练："><a href="#模型训练：" class="headerlink" title="模型训练："></a>模型训练：</h3><img src="1c9d889ad7d1125d0b348875eac1a36c.png" alt="截图" style="zoom:70%;" />
+
+<img src="57225f066d352f43d776fc63545e7d83.png" alt="截图" style="zoom:50%;" />
+
+<img src="b91abc01a441bb8679c42716cd2b4f45.png" alt="截图" style="zoom:50%;" />
+
+<h3 id="实验结果"><a href="#实验结果" class="headerlink" title="实验结果:"></a>实验结果:</h3><img src="4d6a8bd5d4697ce1f6c0dbdacd61bd9a.png" alt="截图" style="zoom:50%;" />
+
+<h2 id="Learning-Intents-behind-Interactions-with-Knowledge-Graph-for-Recommendation-KGIN"><a href="#Learning-Intents-behind-Interactions-with-Knowledge-Graph-for-Recommendation-KGIN" class="headerlink" title="Learning Intents behind Interactions with Knowledge Graph for Recommendation(KGIN)"></a>Learning Intents behind Interactions with Knowledge Graph for Recommendation(KGIN)</h2><h3 id="本文主要思想概括-1"><a href="#本文主要思想概括-1" class="headerlink" title="本文主要思想概括:"></a>本文主要思想概括:</h3><pre><code>    **这篇文章和上一篇主体差不多(毕竟是一个组出的文章),就是在构造CKG和聚合时有点区别.1.本文在勾走CKG时考虑到用户的多兴趣，将User-Item改成(User,p1,Item),(User,p2,Item)等其中(p1,p2是兴趣向量由KG中的relation线性组合而成).2.在聚合时将relation信息融入进去，而不是上文中realtion仅仅用来计算attention系数，具体就是聚合时将relation和实体做哈达玛积.3.最后得到最终embedding是sum而不是concat,没有采用KGE**
+</code></pre>
+<h3 id="collaborative-knowledge-graph-CKG-构造-1"><a href="#collaborative-knowledge-graph-CKG-构造-1" class="headerlink" title="collaborative knowledge graph (CKG)构造:"></a>collaborative knowledge graph (CKG)构造:</h3><pre><code>    **对于每一对交互历史(u,i)，在引入intent之后，都会变成(u,p1,i),(u,p2,i),(u,p3,i),(u,p4,i)，假设有4个意图embedding**
+</code></pre>
+<img src="9e6a6abdcbf906f783eb4ab0abd19836.png" alt="截图" style="zoom:50%;" />
+
+<h3 id="兴趣建模"><a href="#兴趣建模" class="headerlink" title="兴趣建模:"></a>兴趣建模:</h3><p><img src="410fc571b0b10eae7d10e9682e88e691.png" alt="截图"></p>
+<img src="fa6bdb1cfc05ed17b9005455c492b3fb.png" alt="截图" style="zoom:50%;" />
+
+<pre><code>    **这里作者仅采用随机可训练参数**$\mathbf w_&#123;\mathbf &#123;rp&#125;&#125;$，**为了使各个兴趣独立，采用如下方式:**
+</code></pre>
+<img src="c9c518945d78cbd6642936600b29d47d.png" alt="截图" style="zoom:50%;" />
+
+<pre><code>    **思想:最小化兴趣直接的相似度--&gt;最小化兴趣间的联合概率--&gt;最小化兴趣间的互信息，或者直接最小化相关系数:**
+</code></pre>
+<img src="483d16bc7ae4b8869a65125f4b174ca3.png" alt="截图" style="zoom:50%;" />
+
+<h3 id="Relational-Path-aware-Aggregation"><a href="#Relational-Path-aware-Aggregation" class="headerlink" title="Relational Path-aware Aggregation:"></a>Relational Path-aware Aggregation:</h3><img src="227af9bfe5f0cebee130ec154c53c7d6.png" alt="截图" style="zoom:70%;" />
+
+<img src="465a2d77e8c9751a6bb1f4c6859af613.png" alt="截图" style="zoom:50%;" />
+
+<pre><code>    **这里和上一篇有点不同，在于在聚合时将relation和实体哈达玛积，就是relation不仅仅用来计算attention系数还要融入聚合的embedding中,主要这里作者对user和item采用了不同的聚合方式.**
+</code></pre>
+<img src="6378067d5a3facdf14aa8ee93808bdf8.png" alt="截图" style="zoom:70%;" />
+
+<img src="881bdce3ba3904ba1239ef6483504d35.png" alt="截图" style="zoom:50%;" />
+
+<h3 id="模型训练：-1"><a href="#模型训练：-1" class="headerlink" title="模型训练："></a>模型训练：</h3><img src="690474494baa75623b5c2f720669c4f7.png" alt="截图" style="zoom:70%;" />
+
+<img src="ff7a59221b2ff866c376904fccc4fc61.png" alt="截图" style="zoom:50%;" />
+
+<pre><code>    **这里采用sum 来结合每层的embedding，且没有用KGE(相对与上文)**
+</code></pre>
+<h3 id="实验结果："><a href="#实验结果：" class="headerlink" title="实验结果："></a>实验结果：</h3><img src="a3828fd65342b74c8a318106ce5c83d9.png" alt="截图" style="zoom:50%;" />
+
+<p><strong>注意这里KGAT的结果才是正确的，上一篇论文(KGAT)中，作者使用的NDCG计算有误，详情请看:</strong> <a target="_blank" rel="noopener" href="https://github.com/huangtinglin/Knowledge_Graph_based_Intent_Network/issues/18">Issues</a></p>
+
+      
     </div>
+    <div>
+      
+        <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+    
+</div>
+
+      
+    </div>
+
+    
+    
+    
+    
+
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者</strong>
+    SanYu
+  </li>
+  <li class="post-copyright-link">
+  <strong>本文链接</strong>
+  <a target="_blank" rel="noopener" href="https://sunyums.github.io/2022/07/04/KGAT-and-KGIN/" title="KGAT-and-KGIN">https://sunyums.github.io/2022/07/04/KGAT-and-KGIN/</a>
+</li>
+
+  <li class="post-copyright-license">
+    <strong>版权声明 </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
+    
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Knowledge/" rel="tag"><i class="fa fa-tag"></i> Knowledge</a>
+          
+            <a href="/tags/Recommendation/" rel="tag"><i class="fa fa-tag"></i> Recommendation</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2022/02/27/SequencePrediction/" rel="next" title="SequencePrediction">
+                <i class="fa fa-chevron-left"></i> SequencePrediction
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </div>
   
   
   
+  </article>
 
-  
 
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -402,6 +622,13 @@
 
 
           
+
+  
+    <div class="comments" id="comments">
+    </div>
+  
+
+
 
         </div>
         
@@ -422,8 +649,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -529,6 +765,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#KGAT-Knowledge-Graph-Attention-Network-for-Recommendation"><span class="nav-number">1.</span> <span class="nav-text">KGAT: Knowledge Graph Attention Network for Recommendation</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E5%A2%9E%E5%BC%BA%E6%8E%A8%E8%8D%90%E7%9A%84%E4%BB%8B%E7%BB%8D"><span class="nav-number">1.1.</span> <span class="nav-text">知识图谱增强推荐的介绍:</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9C%AC%E6%96%87%E4%B8%BB%E8%A6%81%E6%80%9D%E6%83%B3%E6%A6%82%E6%8B%AC"><span class="nav-number">1.2.</span> <span class="nav-text">本文主要思想概括:</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#collaborative-knowledge-graph-CKG-%E6%9E%84%E9%80%A0"><span class="nav-number">1.3.</span> <span class="nav-text">collaborative knowledge graph (CKG)构造:</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#KGE%E5%AD%A6%E4%B9%A0"><span class="nav-number">1.4.</span> <span class="nav-text">KGE学习:</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#GAT%E8%81%9A%E5%90%88"><span class="nav-number">1.5.</span> <span class="nav-text">GAT聚合:</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A8%A1%E5%9E%8B%E8%AE%AD%E7%BB%83%EF%BC%9A"><span class="nav-number">1.6.</span> <span class="nav-text">模型训练：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%9E%E9%AA%8C%E7%BB%93%E6%9E%9C"><span class="nav-number">1.7.</span> <span class="nav-text">实验结果:</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Learning-Intents-behind-Interactions-with-Knowledge-Graph-for-Recommendation-KGIN"><span class="nav-number">2.</span> <span class="nav-text">Learning Intents behind Interactions with Knowledge Graph for Recommendation(KGIN)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9C%AC%E6%96%87%E4%B8%BB%E8%A6%81%E6%80%9D%E6%83%B3%E6%A6%82%E6%8B%AC-1"><span class="nav-number">2.1.</span> <span class="nav-text">本文主要思想概括:</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#collaborative-knowledge-graph-CKG-%E6%9E%84%E9%80%A0-1"><span class="nav-number">2.2.</span> <span class="nav-text">collaborative knowledge graph (CKG)构造:</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%B4%E8%B6%A3%E5%BB%BA%E6%A8%A1"><span class="nav-number">2.3.</span> <span class="nav-text">兴趣建模:</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Relational-Path-aware-Aggregation"><span class="nav-number">2.4.</span> <span class="nav-text">Relational Path-aware Aggregation:</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A8%A1%E5%9E%8B%E8%AE%AD%E7%BB%83%EF%BC%9A-1"><span class="nav-number">2.5.</span> <span class="nav-text">模型训练：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%9E%E9%AA%8C%E7%BB%93%E6%9E%9C%EF%BC%9A"><span class="nav-number">2.6.</span> <span class="nav-text">实验结果：</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -678,6 +930,10 @@
   
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
 
   
 
@@ -1099,26 +1355,6 @@
   
 
   
-  
-    <script type="text/x-mathjax-config">
-      MathJax.Hub.Config({
-        tex2jax: {
-          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
-          processEscapes: true,
-          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
-        }
-      });
-    </script>
-
-    <script type="text/x-mathjax-config">
-      MathJax.Hub.Queue(function() {
-        var all = MathJax.Hub.getAllJax(), i;
-        for (i=0; i < all.length; i += 1) {
-          all[i].SourceElement().parentNode.className += ' has-jax';
-        }
-      });
-    </script>
-    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
   
 
 
