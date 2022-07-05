@@ -6,7 +6,7 @@
   <link href="http://example.com/atom.xml" rel="self"/>
   
   <link href="http://example.com/"/>
-  <updated>2022-07-04T15:41:51.387Z</updated>
+  <updated>2022-07-05T01:14:15.028Z</updated>
   <id>http://example.com/</id>
   
   <author>
@@ -21,7 +21,7 @@
     <link href="http://example.com/2022/07/04/KGAT-and-KGIN/"/>
     <id>http://example.com/2022/07/04/KGAT-and-KGIN/</id>
     <published>2022-07-04T14:58:00.000Z</published>
-    <updated>2022-07-04T15:41:51.387Z</updated>
+    <updated>2022-07-05T01:14:15.028Z</updated>
     
     
       
@@ -70,7 +70,7 @@
     <link href="http://example.com/2022/02/27/MNIST/"/>
     <id>http://example.com/2022/02/27/MNIST/</id>
     <published>2022-02-27T05:27:39.000Z</published>
-    <updated>2022-02-27T05:57:52.739Z</updated>
+    <updated>2022-07-05T01:16:47.244Z</updated>
     
     
       
@@ -83,6 +83,8 @@
     
     
     
+    
+    <category term="homework" scheme="http://example.com/tags/homework/"/>
     
   </entry>
   

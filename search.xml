@@ -1,100 +1,101 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>Minst</title>
-    <url>/2022/02/27/MNIST/</url>
-    <content><![CDATA[<h2 id="作业一：手写数字分类"><a href="#作业一：手写数字分类" class="headerlink" title="作业一：手写数字分类"></a>作业一：手写数字分类</h2><p><strong>我通过对比不同参数的初始化方法（标准正太分布、kaiming、Glorot）发现kaming初始化方法效果较好。通过对比不同的损失函数（交叉熵损失函数和MSE）由于我最后一层采用的是softmax层所以交叉熵损失函数效果明显好于MSE，采用MSE时效果极其差劣，后来我将最后一层改为sigmod层用MSE实验后发现效果有着显著提升但不及softmax+交叉熵，所以可以得出结论再多分类任务中softmax和交叉熵损失比较搭配。</strong></p>
-<p><strong>我简单尝试了不同的学习率调整方案(固定学习率、指数下降、学习率预热)，或许是我之前就已经调整过学习率的原因，所以在我的模型中固定学习率的效果较好（0.3）。在对比不同正则化实验中，我开始将正则化参数调的较大，发现模型效果较差，认为手写数字识别这种简单模型或许不太需要正则化来约束参数，其中L2正则化效果优于L1正则化，具体的实验结果如下：</strong></p>
-<p><strong>最后我采用的模型是（kaiming初始化+交叉熵损失函数+0.3固定学习率+无正则化）最优准确率98.24%</strong></p>
-<p><a href="https://github.com/SunYuMs/Homework/">https://github.com/SunYuMs/Homework/</a></p>
-<br/>
+    <title>KGAT-and-KGIN</title>
+    <url>/2022/07/04/KGAT-and-KGIN/</url>
+    <content><![CDATA[<h2 id="KGAT-Knowledge-Graph-Attention-Network-for-Recommendation"><a href="#KGAT-Knowledge-Graph-Attention-Network-for-Recommendation" class="headerlink" title="KGAT: Knowledge Graph Attention Network for Recommendation"></a>KGAT: Knowledge Graph Attention Network for Recommendation</h2><br>
 
-<h3 id="（1）对比不同的参数初始化方法"><a href="#（1）对比不同的参数初始化方法" class="headerlink" title="（1）对比不同的参数初始化方法"></a>（1）对比不同的参数初始化方法</h3><br/>
+<h3 id="知识图谱增强推荐的介绍"><a href="#知识图谱增强推荐的介绍" class="headerlink" title="知识图谱增强推荐的介绍:"></a>知识图谱增强推荐的介绍:</h3><img src="9300fbb2eed78f16d802401cbc880b23.png" alt="截图" style="zoom:50%;">
 
-<table>
-<thead>
-<tr>
-<th align="center">初始化方法</th>
-<th align="center">测试集准确率%</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="center">标准正太分布初始化（Baseline）</td>
-<td align="center">96.15</td>
-</tr>
-<tr>
-<td align="center">kaiming初始化</td>
-<td align="center">98.24</td>
-</tr>
-<tr>
-<td align="center">Glorot初始化</td>
-<td align="center">98.20</td>
-</tr>
-</tbody></table>
-<img src="4c2f651ac53336420097632a284c7043.png" alt="截图" style="zoom:70%;" />
+<p>　　<strong>如图所示，我们一般在传统推荐系统(协同过滤)中拥有交互信息(user–item),但是不可避免会遇到冷启动以及数据稀疏问题，所以这时就要采用额外的辅助信息(side infomation)来帮助学习，知识图谱就作为其中一种，来辅助学习embedding。知识图谱通常由(h,r,t)三元组构成，其中h,t为实体，r为relation，如上图的(Titanic,acted,Leonardo),一般知识图谱推荐中不太会有社交网络的信息(获取不到friend)</strong></p>
+<p>　　<strong>GCN之前常用基于embedding的方法和基于元路径的方法，其中基于embedding的方法基本采用TransE等知识图谱embedding学习的方法来学得item的embedding作为先验输入到协同过滤(Collaborative Filtering)模型中去:(TransE模型大致如下思想)，就是使得学得得embedding满足，h + r = t</strong></p>
+<img src="2373f21c1b9d62412ce22ef308dd5e0d.png" alt="截图" style="zoom:50%;">
 
-<h3 id="（2）对比不同的损失函数"><a href="#（2）对比不同的损失函数" class="headerlink" title="（2）对比不同的损失函数"></a>（2）对比不同的损失函数</h3><table>
-<thead>
-<tr>
-<th align="center">损失函数</th>
-<th align="center">测试集准确率%</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="center">交叉熵损失函数（Baseline）</td>
-<td align="center">96.15</td>
-</tr>
-<tr>
-<td align="center">MS</td>
-<td align="center">65.40</td>
-</tr>
-</tbody></table>
-<img src="1fa54bd0960f4a2bef7d57687cf9e06d.png" alt="截图" style="zoom:70%;" />
+<br>
 
-<h3 id="（3）对比不同的学习率调整方法"><a href="#（3）对比不同的学习率调整方法" class="headerlink" title="（3）对比不同的学习率调整方法"></a>（3）对比不同的学习率调整方法</h3><table>
-<thead>
-<tr>
-<th align="center">学习率调整方法</th>
-<th align="center">测试集准确率%</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="center">固定（Baseline）</td>
-<td align="center">96.15</td>
-</tr>
-<tr>
-<td align="center">学习率预热</td>
-<td align="center">95.16</td>
-</tr>
-<tr>
-<td align="center">指数下降</td>
-<td align="center">96.08</td>
-</tr>
-</tbody></table>
-<img src="a7ad51c113701c1f6288b44ed5ce6850.png" alt="截图" style="zoom:70%;" />
+<p>　　<strong>总结:学到了KG的语义信息</strong>    </p>
+<p>　　<strong>而基于路径得思想就是，假设存在 user 和 item 之间存在 K 个路径，针对其中的路径 p，学习到其向量表示为</strong> <mjx-container class="MathJax" jax="SVG"><svg style="vertical-align: -0.65ex;" xmlns="http://www.w3.org/2000/svg" width="2.656ex" height="2.22ex" role="img" focusable="false" viewBox="0 -694 1173.8 981.2"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="msub"><g data-mml-node="TeXAtom" data-mjx-texclass="ORD"><g data-mml-node="mi"><path data-c="1D421" d="M40 686L131 690Q222 694 223 694H229V533L230 372L238 381Q248 394 264 407T317 435T398 450Q428 450 448 447T491 434T529 402T551 346Q553 335 554 198V62H623V0H614Q596 3 489 3Q374 3 365 0H356V62H425V194V275Q425 348 416 373T371 399Q326 399 288 370T238 290Q236 281 235 171V62H304V0H295Q277 3 171 3Q64 3 46 0H37V62H106V332Q106 387 106 453T107 534Q107 593 105 605T91 620Q77 624 50 624H37V686H40Z"></path></g></g><g data-mml-node="TeXAtom" transform="translate(672,-150) scale(0.707)" data-mjx-texclass="ORD"><g data-mml-node="TeXAtom" data-mjx-texclass="ORD"><g data-mml-node="mi"><path data-c="1D429" d="M32 442L123 446Q214 450 215 450H221V409Q222 409 229 413T251 423T284 436T328 446T382 450Q480 450 540 388T600 223Q600 128 539 61T361 -6H354Q292 -6 236 28L227 34V-132H296V-194H287Q269 -191 163 -191Q56 -191 38 -194H29V-132H98V113V284Q98 330 97 348T93 370T83 376Q69 380 42 380H29V442H32ZM457 224Q457 303 427 349T350 395Q282 395 235 352L227 345V104L233 97Q274 45 337 45Q383 45 420 86T457 224Z"></path></g></g></g></g></g></g></svg></mjx-container><strong>,最终的路径信息如下，其中 g 可能是 max-pooling 或者是加权的 sum-pooling：</strong></p>
+<img src="bb4beac4f97439026731ca9b5d8235bd.png" alt="截图" style="zoom:50%;">
 
-<h3 id="（4）对比不同的正则化方法"><a href="#（4）对比不同的正则化方法" class="headerlink" title="（4）对比不同的正则化方法"></a>（4）对比不同的正则化方法</h3><table>
-<thead>
-<tr>
-<th align="center">正则化方法</th>
-<th align="center">测试集准确率%</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="center">无正则（Baseline）</td>
-<td align="center">96.15</td>
-</tr>
-<tr>
-<td align="center">L1</td>
-<td align="center">95.94</td>
-</tr>
-<tr>
-<td align="center">L2</td>
-<td align="center">97.01</td>
-</tr>
-</tbody></table>
-<img src="10d296dc3d938cd1db9c63762c0b6be7.png" alt="截图" style="zoom:70%;" />
+<p>　　<strong>总结:学到了KG的联通信息</strong></p>
+<p>　　<strong>混合的方法基本就基于GCN的embedding传播思想,本文(KGAT)就是代表</strong></p>
+<h3 id="本文主要思想概括"><a href="#本文主要思想概括" class="headerlink" title="本文主要思想概括:"></a>本文主要思想概括:</h3><p><strong>将User-Item交互矩阵变成(user,interaction,item),这种类似知识图谱的结构，其中user和item作为实体，interaction为新引入的relation 向量，这样的话，交互矩阵就可以和知识图谱成为一个整体的矩阵，最后在使用GAT的方式来聚合embedding,注意:本文使用KGE(TransR )和Recommendation任务迭代训练</strong></p>
+<h3 id="collaborative-knowledge-graph-CKG-构造"><a href="#collaborative-knowledge-graph-CKG-构造" class="headerlink" title="collaborative knowledge graph (CKG)构造:"></a>collaborative knowledge graph (CKG)构造:</h3><img src="e198e24cc42aed31f80ebe834c3cb8e9.png" alt="截图" style="zoom:50%;">
+
+<br>
+
+<br>
+
+<p>　　<strong>如图和上述可知:构图方式就是将交互矩阵添加交互关系形成KG中的三元组</strong></p>
+<h3 id="KGE学习"><a href="#KGE学习" class="headerlink" title="KGE学习:"></a>KGE学习:</h3><img src="62b22e16a7ba456f3505f607ad46a325.png" alt="截图" style="zoom:70%;">
+
+<img src="5c8900d82ff0049c55115f5816bd197f.png" alt="截图" style="zoom:50%;">
+
+<h3 id="GAT聚合"><a href="#GAT聚合" class="headerlink" title="GAT聚合:"></a>GAT聚合:</h3><img src="2633d629c9d85faaab6586eedfd09058.png" alt="截图" style="zoom:70%;">
+
+<br>
+
+<img src="c6c8077a4e20483e75071816121a4897.png" alt="截图" style="zoom:50%;">
+
+<p>　　<strong>常见的attention聚合三步骤的范式,注意在计算attrntion系数时将</strong><mjx-container class="MathJax" jax="SVG"><svg style="vertical-align: -0.339ex;" xmlns="http://www.w3.org/2000/svg" width="3.636ex" height="1.891ex" role="img" focusable="false" viewBox="0 -686 1607.2 836"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="msub"><g data-mml-node="TeXAtom" data-mjx-texclass="ORD"><g data-mml-node="mi"><path data-c="1D416" d="M915 686L1052 683Q1142 683 1157 686H1164V624H1073L957 320Q930 249 900 170T855 52T839 10Q834 0 826 -5Q821 -7 799 -7H792Q777 -7 772 -5T759 10Q759 11 748 39T716 122T676 228L594 442L512 228Q486 159 455 78Q433 19 428 9T416 -5Q411 -7 389 -7H379Q356 -7 349 10Q349 12 334 51T288 170T231 320L116 624H24V686H35Q44 683 183 683Q331 683 355 686H368V624H323Q278 624 278 623L437 207L499 369L561 531L526 624H434V686H445Q454 683 593 683Q741 683 765 686H778V624H733Q688 624 688 623L847 207Q848 207 927 415T1006 624H905V686H915Z"></path></g></g><g data-mml-node="TeXAtom" transform="translate(1222,-150) scale(0.707)" data-mjx-texclass="ORD"><g data-mml-node="TeXAtom" data-mjx-texclass="ORD"><g data-mml-node="mi"><path data-c="1D42B" d="M405 293T374 293T324 312T305 361Q305 378 312 394Q315 397 315 399Q305 399 294 394T266 375T238 329T222 249Q221 241 221 149V62H308V0H298Q280 3 161 3Q47 3 38 0H29V62H98V210V303Q98 353 96 363T83 376Q69 380 42 380H29V442H32L118 446Q204 450 205 450H210V414L211 378Q247 449 315 449H321Q384 449 413 422T442 360Q442 332 424 313Z"></path></g></g></g></g></g></g></svg></mjx-container> <strong>乘以</strong> <mjx-container class="MathJax" jax="SVG"><svg style="vertical-align: -0.452ex;" xmlns="http://www.w3.org/2000/svg" width="6.496ex" height="2.149ex" role="img" focusable="false" viewBox="0 -750 2871.2 950"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="msub"><g data-mml-node="TeXAtom" data-mjx-texclass="ORD"><g data-mml-node="mi"><path data-c="1D41E" d="M32 225Q32 332 102 392T272 452H283Q382 452 436 401Q494 343 494 243Q494 226 486 222T440 217Q431 217 394 217T327 218H175V209Q175 177 179 154T196 107T236 69T306 50Q312 49 323 49Q376 49 410 85Q421 99 427 111T434 127T442 133T463 135H468Q494 135 494 117Q494 110 489 97T468 66T431 32T373 5T292 -6Q181 -6 107 55T32 225ZM383 276Q377 346 348 374T280 402Q253 402 230 390T195 357Q179 331 176 279V266H383V276Z"></path></g></g><g data-mml-node="TeXAtom" transform="translate(560,-150) scale(0.707)" data-mjx-texclass="ORD"><g data-mml-node="TeXAtom" data-mjx-texclass="ORD"><g data-mml-node="mi"><path data-c="1D42D" d="M272 49Q320 49 320 136V145V177H382V143Q382 106 380 99Q374 62 349 36T285 -2L272 -5H247Q173 -5 134 27Q109 46 102 74T94 160Q94 171 94 199T95 245V382H21V433H25Q58 433 90 456Q121 479 140 523T162 621V635H224V444H363V382H224V239V207V149Q224 98 228 81T249 55Q261 49 272 49Z"></path></g></g></g></g><g data-mml-node="TeXAtom" data-mjx-texclass="ORD" transform="translate(926.1,0)"><g data-mml-node="mo"><text data-variant="normal" transform="scale(1,-1)" font-size="884px" font-family="serif">、</text></g></g><g data-mml-node="msub" transform="translate(1926.1,0)"><g data-mml-node="TeXAtom" data-mjx-texclass="ORD"><g data-mml-node="mi"><path data-c="1D41E" d="M32 225Q32 332 102 392T272 452H283Q382 452 436 401Q494 343 494 243Q494 226 486 222T440 217Q431 217 394 217T327 218H175V209Q175 177 179 154T196 107T236 69T306 50Q312 49 323 49Q376 49 410 85Q421 99 427 111T434 127T442 133T463 135H468Q494 135 494 117Q494 110 489 97T468 66T431 32T373 5T292 -6Q181 -6 107 55T32 225ZM383 276Q377 346 348 374T280 402Q253 402 230 390T195 357Q179 331 176 279V266H383V276Z"></path></g></g><g data-mml-node="TeXAtom" transform="translate(560,-150) scale(0.707)" data-mjx-texclass="ORD"><g data-mml-node="TeXAtom" data-mjx-texclass="ORD"><g data-mml-node="mi"><path data-c="1D42B" d="M405 293T374 293T324 312T305 361Q305 378 312 394Q315 397 315 399Q305 399 294 394T266 375T238 329T222 249Q221 241 221 149V62H308V0H298Q280 3 161 3Q47 3 38 0H29V62H98V210V303Q98 353 96 363T83 376Q69 380 42 380H29V442H32L118 446Q204 450 205 450H210V414L211 378Q247 449 315 449H321Q384 449 413 422T442 360Q442 332 424 313Z"></path></g></g></g></g></g></g></svg></mjx-container><strong>是为了将emedding投入到relation空间，这里relation仅仅用作计算attention系数，要和后面一篇文章做区分。最后把邻居embedding和本身的embedding合并:文章给了三种，图中画的是Bi-Interaction</strong></p>
+<img src="e81cd00a3b4d8431bd4d0718d4a4571f.png" alt="截图" style="zoom:50%;">
+
+<h3 id="模型训练："><a href="#模型训练：" class="headerlink" title="模型训练："></a>模型训练：</h3><img src="1c9d889ad7d1125d0b348875eac1a36c.png" alt="截图" style="zoom:70%;">
+
+<img src="57225f066d352f43d776fc63545e7d83.png" alt="截图" style="zoom:50%;">
+
+<img src="b91abc01a441bb8679c42716cd2b4f45.png" alt="截图" style="zoom:50%;">
+
+<h3 id="实验结果"><a href="#实验结果" class="headerlink" title="实验结果:"></a>实验结果:</h3><img src="4d6a8bd5d4697ce1f6c0dbdacd61bd9a.png" alt="截图" style="zoom:50%;">
+
+<h2 id="Learning-Intents-behind-Interactions-with-Knowledge-Graph-for-Recommendation-KGIN"><a href="#Learning-Intents-behind-Interactions-with-Knowledge-Graph-for-Recommendation-KGIN" class="headerlink" title="Learning Intents behind Interactions with Knowledge Graph for Recommendation(KGIN)"></a>Learning Intents behind Interactions with Knowledge Graph for Recommendation(KGIN)</h2><h3 id="本文主要思想概括-1"><a href="#本文主要思想概括-1" class="headerlink" title="本文主要思想概括:"></a>本文主要思想概括:</h3><p>　　<strong>这篇文章和上一篇主体差不多(毕竟是一个组出的文章),就是在构造CKG和聚合时有点区别.1.本文在勾走CKG时考虑到用户的多兴趣，将User-Item改成(User,p1,Item),(User,p2,Item)等其中(p1,p2是兴趣向量由KG中的relation线性组合而成).2.在聚合时将relation信息融入进去，而不是上文中realtion仅仅用来计算attention系数，具体就是聚合时将relation和实体做哈达玛积.3.最后得到最终embedding是sum而不是concat,没有采用KGE</strong></p>
+<h3 id="collaborative-knowledge-graph-CKG-构造-1"><a href="#collaborative-knowledge-graph-CKG-构造-1" class="headerlink" title="collaborative knowledge graph (CKG)构造:"></a>collaborative knowledge graph (CKG)构造:</h3><p>　　<strong>对于每一对交互历史(u,i)，在引入intent之后，都会变成(u,p1,i),(u,p2,i),(u,p3,i),(u,p4,i)，假设有4个意图embedding</strong></p>
+<img src="9e6a6abdcbf906f783eb4ab0abd19836.png" alt="截图" style="zoom:50%;">
+
+<h3 id="兴趣建模"><a href="#兴趣建模" class="headerlink" title="兴趣建模:"></a>兴趣建模:</h3><p><img src="410fc571b0b10eae7d10e9682e88e691.png" alt="截图"></p>
+<br>
+
+<img src="fa6bdb1cfc05ed17b9005455c492b3fb.png" alt="截图" style="zoom:50%;">
+
+<br>
+
+<p>　　<strong>这里作者仅采用随机可训练参数</strong><mjx-container class="MathJax" jax="SVG"><svg style="vertical-align: -0.65ex;" xmlns="http://www.w3.org/2000/svg" width="3.848ex" height="1.654ex" role="img" focusable="false" viewBox="0 -444 1701 731.2"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="msub"><g data-mml-node="TeXAtom" data-mjx-texclass="ORD"><g data-mml-node="mi"><path data-c="1D430" d="M624 444Q636 441 722 441Q797 441 800 444H805V382H741L593 11Q592 10 590 8T586 4T584 2T581 0T579 -2T575 -3T571 -3T567 -4T561 -4T553 -4H542Q525 -4 518 6T490 70Q474 110 463 137L415 257L367 137Q357 111 341 72Q320 17 313 7T289 -4H277Q259 -4 253 -2T238 11L90 382H25V444H32Q47 441 140 441Q243 441 261 444H270V382H222L310 164L382 342L366 382H303V444H310Q322 441 407 441Q508 441 523 444H531V382H506Q481 382 481 380Q482 376 529 259T577 142L674 382H617V444H624Z"></path></g></g><g data-mml-node="TeXAtom" transform="translate(864,-150) scale(0.707)" data-mjx-texclass="ORD"><g data-mml-node="TeXAtom" data-mjx-texclass="ORD"><g data-mml-node="mi"><path data-c="1D42B" d="M405 293T374 293T324 312T305 361Q305 378 312 394Q315 397 315 399Q305 399 294 394T266 375T238 329T222 249Q221 241 221 149V62H308V0H298Q280 3 161 3Q47 3 38 0H29V62H98V210V303Q98 353 96 363T83 376Q69 380 42 380H29V442H32L118 446Q204 450 205 450H210V414L211 378Q247 449 315 449H321Q384 449 413 422T442 360Q442 332 424 313Z"></path><path data-c="1D429" d="M32 442L123 446Q214 450 215 450H221V409Q222 409 229 413T251 423T284 436T328 446T382 450Q480 450 540 388T600 223Q600 128 539 61T361 -6H354Q292 -6 236 28L227 34V-132H296V-194H287Q269 -191 163 -191Q56 -191 38 -194H29V-132H98V113V284Q98 330 97 348T93 370T83 376Q69 380 42 380H29V442H32ZM457 224Q457 303 427 349T350 395Q282 395 235 352L227 345V104L233 97Q274 45 337 45Q383 45 420 86T457 224Z" transform="translate(474,0)"></path></g></g></g></g></g></g></svg></mjx-container>，<strong>为了使各个兴趣独立，采用如下方式:</strong></p>
+<img src="c9c518945d78cbd6642936600b29d47d.png" alt="截图" style="zoom:50%;">
+
+<br>
+
+<p>　　<strong>思想:最小化兴趣直接的相似度–&gt;最小化兴趣间的联合概率–&gt;最小化兴趣间的互信息，或者直接最小化相关系数:</strong></p>
+<img src="483d16bc7ae4b8869a65125f4b174ca3.png" alt="截图" style="zoom:50%;">
+
+<h3 id="Relational-Path-aware-Aggregation"><a href="#Relational-Path-aware-Aggregation" class="headerlink" title="Relational Path-aware Aggregation:"></a>Relational Path-aware Aggregation:</h3><img src="227af9bfe5f0cebee130ec154c53c7d6.png" alt="截图" style="zoom:70%;">
+
+<img src="465a2d77e8c9751a6bb1f4c6859af613.png" alt="截图" style="zoom:50%;">
+
+<p>　　<strong>这里和上一篇有点不同，在于在聚合时将relation和实体哈达玛积，就是relation不仅仅用来计算attention系数还要融入聚合的embedding中,主要这里作者对user和item采用了不同的聚合方式.</strong></p>
+<img src="6378067d5a3facdf14aa8ee93808bdf8.png" alt="截图" style="zoom:70%;">
+
+<img src="881bdce3ba3904ba1239ef6483504d35.png" alt="截图" style="zoom:50%;">
+
+<h3 id="模型训练：-1"><a href="#模型训练：-1" class="headerlink" title="模型训练："></a>模型训练：</h3><img src="690474494baa75623b5c2f720669c4f7.png" alt="截图" style="zoom:70%;">
+
+<img src="ff7a59221b2ff866c376904fccc4fc61.png" alt="截图" style="zoom:50%;">
+
+<br>
+
+<p>　　<strong>这里采用sum 来结合每层的embedding，且没有用KGE(相对与上文)</strong></p>
+<h3 id="实验结果："><a href="#实验结果：" class="headerlink" title="实验结果："></a>实验结果：</h3><img src="a3828fd65342b74c8a318106ce5c83d9.png" alt="截图" style="zoom:50%;">
+
+<p>　　<strong>注意这里KGAT的结果才是正确的，上一篇论文(KGAT)中，作者使用的NDCG计算有误，详情请看:</strong> <a href="https://github.com/huangtinglin/Knowledge_Graph_based_Intent_Network/issues/18">Issues</a></p>
+<!-- ### 总结:
+
+- **兴趣和relation挂钩－－＞知识图谱不全，relation肯定有残缺，或者relation有冗余**
+- **Relation embedding 和 实体 enbedding 平等对待，直接哈达玛积，KGE 没有做先验学习**
+- **忽视协同信号,过分强调KG图，而没有充分利用交互矩阵.** -->
 ]]></content>
+      <tags>
+        <tag>Knowledge</tag>
+        <tag>Recommendation</tag>
+      </tags>
   </entry>
   <entry>
     <title>SequencePrediction</title>
@@ -275,78 +276,102 @@
       </tags>
   </entry>
   <entry>
-    <title>KGAT-and-KGIN</title>
-    <url>/2022/07/04/KGAT-and-KGIN/</url>
-    <content><![CDATA[<h2 id="KGAT-Knowledge-Graph-Attention-Network-for-Recommendation"><a href="#KGAT-Knowledge-Graph-Attention-Network-for-Recommendation" class="headerlink" title="KGAT: Knowledge Graph Attention Network for Recommendation"></a>KGAT: Knowledge Graph Attention Network for Recommendation</h2><br/>
+    <title>Minst</title>
+    <url>/2022/02/27/MNIST/</url>
+    <content><![CDATA[<h2 id="作业一：手写数字分类"><a href="#作业一：手写数字分类" class="headerlink" title="作业一：手写数字分类"></a>作业一：手写数字分类</h2><p><strong>我通过对比不同参数的初始化方法（标准正太分布、kaiming、Glorot）发现kaming初始化方法效果较好。通过对比不同的损失函数（交叉熵损失函数和MSE）由于我最后一层采用的是softmax层所以交叉熵损失函数效果明显好于MSE，采用MSE时效果极其差劣，后来我将最后一层改为sigmod层用MSE实验后发现效果有着显著提升但不及softmax+交叉熵，所以可以得出结论再多分类任务中softmax和交叉熵损失比较搭配。</strong></p>
+<p><strong>我简单尝试了不同的学习率调整方案(固定学习率、指数下降、学习率预热)，或许是我之前就已经调整过学习率的原因，所以在我的模型中固定学习率的效果较好（0.3）。在对比不同正则化实验中，我开始将正则化参数调的较大，发现模型效果较差，认为手写数字识别这种简单模型或许不太需要正则化来约束参数，其中L2正则化效果优于L1正则化，具体的实验结果如下：</strong></p>
+<p><strong>最后我采用的模型是（kaiming初始化+交叉熵损失函数+0.3固定学习率+无正则化）最优准确率98.24%</strong></p>
+<p><a href="https://github.com/SunYuMs/Homework/">https://github.com/SunYuMs/Homework/</a></p>
+<br/>
 
-<h3 id="知识图谱增强推荐的介绍"><a href="#知识图谱增强推荐的介绍" class="headerlink" title="知识图谱增强推荐的介绍:"></a>知识图谱增强推荐的介绍:</h3><img src="9300fbb2eed78f16d802401cbc880b23.png" alt="截图" style="zoom:50%;" />
+<h3 id="（1）对比不同的参数初始化方法"><a href="#（1）对比不同的参数初始化方法" class="headerlink" title="（1）对比不同的参数初始化方法"></a>（1）对比不同的参数初始化方法</h3><br/>
 
-<p><strong>如图所示，我们一般在传统推荐系统(协同过滤)中拥有交互信息(user–item),但是不可避免会遇到冷启动以及数据稀疏问题，所以这时就要采用额外的辅助信息(side infomation)来帮助学习，知识图谱就作为其中一种，来辅助学习embedding。知识图谱通常由(h,r,t)三元组构成，其中h,t为实体，r为relation，如上图的(Titanic,acted,Leonardo),一般知识图谱推荐中不太会有社交网络的信息(获取不到friend)</strong></p>
-<p><strong>GCN之前常用基于embedding的方法和基于元路径的方法，其中基于embedding的方法基本采用TransE等知识图谱embedding学习的方法来学得item的embedding作为先验输入到协同过滤(Collaborative Filtering)模型中去:(TransE模型大致如下思想)，就是使得学得得embedding满足，h + r = t</strong></p>
-<img src="2373f21c1b9d62412ce22ef308dd5e0d.png" alt="截图" style="zoom:50%;" />
+<table>
+<thead>
+<tr>
+<th align="center">初始化方法</th>
+<th align="center">测试集准确率%</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">标准正太分布初始化（Baseline）</td>
+<td align="center">96.15</td>
+</tr>
+<tr>
+<td align="center">kaiming初始化</td>
+<td align="center">98.24</td>
+</tr>
+<tr>
+<td align="center">Glorot初始化</td>
+<td align="center">98.20</td>
+</tr>
+</tbody></table>
+<img src="4c2f651ac53336420097632a284c7043.png" alt="截图" style="zoom:70%;" />
 
-<p><strong>总结:学到了KG的语义信息</strong>    </p>
-<p><strong>而基于路径得思想就是，假设存在 user 和 item 之间存在 K 个路径，针对其中的路径 p，学习到其向量表示为</strong> $\mathbf h_{\mathbf p}$** ，最终的路径信息如下，其中 g 可能是 max-pooling 或者是加权的 sum-pooling：**</p>
-<img src="bb4beac4f97439026731ca9b5d8235bd.png" alt="截图" style="zoom:50%;" />
+<h3 id="（2）对比不同的损失函数"><a href="#（2）对比不同的损失函数" class="headerlink" title="（2）对比不同的损失函数"></a>（2）对比不同的损失函数</h3><table>
+<thead>
+<tr>
+<th align="center">损失函数</th>
+<th align="center">测试集准确率%</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">交叉熵损失函数（Baseline）</td>
+<td align="center">96.15</td>
+</tr>
+<tr>
+<td align="center">MS</td>
+<td align="center">65.40</td>
+</tr>
+</tbody></table>
+<img src="1fa54bd0960f4a2bef7d57687cf9e06d.png" alt="截图" style="zoom:70%;" />
 
-<p><strong>总结:学到了KG的联通信息</strong></p>
-<p><strong>混合的方法基本就基于GCN的embedding传播思想,本文(KGAT)就是代表</strong></p>
-<h3 id="本文主要思想概括"><a href="#本文主要思想概括" class="headerlink" title="本文主要思想概括:"></a>本文主要思想概括:</h3><p><strong>将User-Item交互矩阵变成(user,interaction,item),这种类似知识图谱的结构，其中user和item作为实体，interaction为新引入的relation 向量，这样的话，交互矩阵就可以和知识图谱成为一个整体的矩阵，最后在使用GAT的方式来聚合embedding,注意:本文使用KGE(TransR )和Recommendation任务迭代训练</strong></p>
-<h3 id="collaborative-knowledge-graph-CKG-构造"><a href="#collaborative-knowledge-graph-CKG-构造" class="headerlink" title="collaborative knowledge graph (CKG)构造:"></a>collaborative knowledge graph (CKG)构造:</h3><img src="e198e24cc42aed31f80ebe834c3cb8e9.png" alt="截图" style="zoom:50%;" />
+<h3 id="（3）对比不同的学习率调整方法"><a href="#（3）对比不同的学习率调整方法" class="headerlink" title="（3）对比不同的学习率调整方法"></a>（3）对比不同的学习率调整方法</h3><table>
+<thead>
+<tr>
+<th align="center">学习率调整方法</th>
+<th align="center">测试集准确率%</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">固定（Baseline）</td>
+<td align="center">96.15</td>
+</tr>
+<tr>
+<td align="center">学习率预热</td>
+<td align="center">95.16</td>
+</tr>
+<tr>
+<td align="center">指数下降</td>
+<td align="center">96.08</td>
+</tr>
+</tbody></table>
+<img src="a7ad51c113701c1f6288b44ed5ce6850.png" alt="截图" style="zoom:70%;" />
 
-<p><strong>如图和上述可知:构图方式就是将交互矩阵添加交互关系形成KG中的三元组</strong></p>
-<h3 id="KGE学习"><a href="#KGE学习" class="headerlink" title="KGE学习:"></a>KGE学习:</h3><img src="62b22e16a7ba456f3505f607ad46a325.png" alt="截图" style="zoom:70%;" />
-
-<img src="5c8900d82ff0049c55115f5816bd197f.png" alt="截图" style="zoom:50%;" />
-
-<h3 id="GAT聚合"><a href="#GAT聚合" class="headerlink" title="GAT聚合:"></a>GAT聚合:</h3><img src="2633d629c9d85faaab6586eedfd09058.png" alt="截图" style="zoom:70%;" />
-
-<img src="c6c8077a4e20483e75071816121a4897.png" alt="截图" style="zoom:50%;" />
-
-<p><strong>常见的attention聚合三步骤的范式,注意在计算attrntion系数时将</strong>$\mathbf W_{\mathbf r}$ <strong>乘以</strong> $\mathbf e_{\mathbf t}、\mathbf e_{\mathbf r}$<strong>是为了将emedding投入到relation空间，这里relation仅仅用作计算attention系数，要和后面一篇文章做区分。最后把邻居embedding和本身的embedding合并:文章给了三种，图中画的是Bi-Interaction</strong></p>
-<img src="e81cd00a3b4d8431bd4d0718d4a4571f.png" alt="截图" style="zoom:50%;" />
-
-<h3 id="模型训练："><a href="#模型训练：" class="headerlink" title="模型训练："></a>模型训练：</h3><img src="1c9d889ad7d1125d0b348875eac1a36c.png" alt="截图" style="zoom:70%;" />
-
-<img src="57225f066d352f43d776fc63545e7d83.png" alt="截图" style="zoom:50%;" />
-
-<img src="b91abc01a441bb8679c42716cd2b4f45.png" alt="截图" style="zoom:50%;" />
-
-<h3 id="实验结果"><a href="#实验结果" class="headerlink" title="实验结果:"></a>实验结果:</h3><img src="4d6a8bd5d4697ce1f6c0dbdacd61bd9a.png" alt="截图" style="zoom:50%;" />
-
-<h2 id="Learning-Intents-behind-Interactions-with-Knowledge-Graph-for-Recommendation-KGIN"><a href="#Learning-Intents-behind-Interactions-with-Knowledge-Graph-for-Recommendation-KGIN" class="headerlink" title="Learning Intents behind Interactions with Knowledge Graph for Recommendation(KGIN)"></a>Learning Intents behind Interactions with Knowledge Graph for Recommendation(KGIN)</h2><h3 id="本文主要思想概括-1"><a href="#本文主要思想概括-1" class="headerlink" title="本文主要思想概括:"></a>本文主要思想概括:</h3><p><strong>这篇文章和上一篇主体差不多(毕竟是一个组出的文章),就是在构造CKG和聚合时有点区别.1.本文在勾走CKG时考虑到用户的多兴趣，将User-Item改成(User,p1,Item),(User,p2,Item)等其中(p1,p2是兴趣向量由KG中的relation线性组合而成).2.在聚合时将relation信息融入进去，而不是上文中realtion仅仅用来计算attention系数，具体就是聚合时将relation和实体做哈达玛积.3.最后得到最终embedding是sum而不是concat,没有采用KGE</strong></p>
-<h3 id="collaborative-knowledge-graph-CKG-构造-1"><a href="#collaborative-knowledge-graph-CKG-构造-1" class="headerlink" title="collaborative knowledge graph (CKG)构造:"></a>collaborative knowledge graph (CKG)构造:</h3><p><strong>对于每一对交互历史(u,i)，在引入intent之后，都会变成(u,p1,i),(u,p2,i),(u,p3,i),(u,p4,i)，假设有4个意图embedding</strong></p>
-<img src="9e6a6abdcbf906f783eb4ab0abd19836.png" alt="截图" style="zoom:50%;" />
-
-<h3 id="兴趣建模"><a href="#兴趣建模" class="headerlink" title="兴趣建模:"></a>兴趣建模:</h3><img src="fa6bdb1cfc05ed17b9005455c492b3fb.png" alt="截图" style="zoom:50%;" />
-
-<p><strong>这里作者仅采用随机可训练参数</strong>$\mathbf w_{\mathbf {rp}}$，<strong>为了使各个兴趣独立，采用如下方式:</strong></p>
-<img src="c9c518945d78cbd6642936600b29d47d.png" alt="截图" style="zoom:50%;" />
-
-<p><strong>思想:最小化兴趣直接的相似度–&gt;最小化兴趣间的联合概率–&gt;最小化兴趣间的互信息，或者直接最小化相关系数:</strong></p>
-<img src="483d16bc7ae4b8869a65125f4b174ca3.png" alt="截图" style="zoom:50%;" />
-
-<h3 id="Relational-Path-aware-Aggregation"><a href="#Relational-Path-aware-Aggregation" class="headerlink" title="Relational Path-aware Aggregation:"></a>Relational Path-aware Aggregation:</h3><img src="227af9bfe5f0cebee130ec154c53c7d6.png" alt="截图" style="zoom:70%;" />
-
-<img src="465a2d77e8c9751a6bb1f4c6859af613.png" alt="截图" style="zoom:50%;" />
-
-<p><strong>这里和上一篇有点不同，在于在聚合时将relation和实体哈达玛积，就是relation不仅仅用来计算attention系数还要融入聚合的embedding中,主要这里作者对user和item采用了不同的聚合方式.</strong></p>
-<img src="6378067d5a3facdf14aa8ee93808bdf8.png" alt="截图" style="zoom:70%;" />
-
-<img src="881bdce3ba3904ba1239ef6483504d35.png" alt="截图" style="zoom:50%;" />
-
-<h3 id="模型训练：-1"><a href="#模型训练：-1" class="headerlink" title="模型训练："></a>模型训练：</h3><img src="690474494baa75623b5c2f720669c4f7.png" alt="截图" style="zoom:70%;" />
-
-<img src="ff7a59221b2ff866c376904fccc4fc61.png" alt="截图" style="zoom:50%;" />
-
-<p><strong>这里采用sum 来结合每层的embedding，且没有用KGE(相对与上文)</strong></p>
-<h3 id="实验结果："><a href="#实验结果：" class="headerlink" title="实验结果："></a>实验结果：</h3><img src="a3828fd65342b74c8a318106ce5c83d9.png" alt="截图" style="zoom:50%;" />
-
-<p><strong>注意这里KGAT的结果才是正确的，上一篇论文(KGAT)中，作者使用的NDCG计算有误，详情请看:</strong> <a href="https://github.com/huangtinglin/Knowledge_Graph_based_Intent_Network/issues/18">Issues</a></p>
+<h3 id="（4）对比不同的正则化方法"><a href="#（4）对比不同的正则化方法" class="headerlink" title="（4）对比不同的正则化方法"></a>（4）对比不同的正则化方法</h3><table>
+<thead>
+<tr>
+<th align="center">正则化方法</th>
+<th align="center">测试集准确率%</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">无正则（Baseline）</td>
+<td align="center">96.15</td>
+</tr>
+<tr>
+<td align="center">L1</td>
+<td align="center">95.94</td>
+</tr>
+<tr>
+<td align="center">L2</td>
+<td align="center">97.01</td>
+</tr>
+</tbody></table>
+<img src="10d296dc3d938cd1db9c63762c0b6be7.png" alt="截图" style="zoom:70%;" />
 ]]></content>
       <tags>
-        <tag>Knowledge</tag>
-        <tag>Recommendation</tag>
+        <tag>homework</tag>
       </tags>
   </entry>
 </search>
