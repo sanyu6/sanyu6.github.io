@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
-  <title>SunYu</title>
+  <title>Sanyu</title>
   
   <subtitle>图神经网络、推荐系统、机器学习</subtitle>
   <link href="http://example.com/atom.xml" rel="self"/>
@@ -10,7 +10,7 @@
   <id>http://example.com/</id>
   
   <author>
-    <name>SanYu</name>
+    <name>Sanyu</name>
     
   </author>
   
@@ -42,30 +42,6 @@
   </entry>
   
   <entry>
-    <title>SequencePrediction</title>
-    <link href="http://example.com/2022/02/27/SequencePrediction/"/>
-    <id>http://example.com/2022/02/27/SequencePrediction/</id>
-    <published>2022-02-27T06:01:10.000Z</published>
-    <updated>2022-02-27T06:12:11.718Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;p&gt;&lt;a href=&quot;https://github.com/SunYuMs/Homework/&quot;&gt;https://github.com/SunYuMs/Homework/&lt;/a&gt;&lt;br&gt;&lt;br/&gt;&lt;/p&gt;
-&lt;h3 id=&quot;1-数据预处理&quot;&gt;&lt;a href=&quot;#1-数据预处理&quot;</summary>
-        
-      
-    
-    
-    
-    
-    <category term="homework" scheme="http://example.com/tags/homework/"/>
-    
-  </entry>
-  
-  <entry>
     <title>Minst</title>
     <link href="http://example.com/2022/02/27/MNIST/"/>
     <id>http://example.com/2022/02/27/MNIST/</id>
@@ -83,8 +59,6 @@
     
     
     
-    
-    <category term="homework" scheme="http://example.com/tags/homework/"/>
     
   </entry>
   
