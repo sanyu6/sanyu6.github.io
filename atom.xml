@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
-  <title>Sanyu</title>
+  <title>sanyu</title>
   
   <subtitle>图神经网络、推荐系统、机器学习</subtitle>
   <link href="http://example.com/atom.xml" rel="self"/>
@@ -10,7 +10,7 @@
   <id>http://example.com/</id>
   
   <author>
-    <name>Sanyu</name>
+    <name>sanyu</name>
     
   </author>
   
@@ -38,27 +38,6 @@
     <category term="Knowledge" scheme="http://example.com/tags/Knowledge/"/>
     
     <category term="Recommendation" scheme="http://example.com/tags/Recommendation/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Minst</title>
-    <link href="http://example.com/2022/02/27/MNIST/"/>
-    <id>http://example.com/2022/02/27/MNIST/</id>
-    <published>2022-02-27T05:27:39.000Z</published>
-    <updated>2022-07-05T01:16:47.244Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;h2 id=&quot;作业一：手写数字分类&quot;&gt;&lt;a href=&quot;#作业一：手写数字分类&quot; class=&quot;headerlink&quot;</summary>
-        
-      
-    
-    
-    
     
   </entry>
   
