@@ -6,7 +6,7 @@
   <link href="http://example.com/atom.xml" rel="self"/>
   
   <link href="http://example.com/"/>
-  <updated>2022-11-04T05:29:29.134Z</updated>
+  <updated>2022-11-04T05:42:46.879Z</updated>
   <id>http://example.com/</id>
   
   <author>
@@ -17,11 +17,44 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>C和C++的区别</title>
+    <link href="http://example.com/2022/11/04/C%E5%92%8CC++%E7%9A%84%E5%8C%BA%E5%88%AB/"/>
+    <id>http://example.com/2022/11/04/C%E5%92%8CC++%E7%9A%84%E5%8C%BA%E5%88%AB/</id>
+    <published>2022-11-04T05:36:25.000Z</published>
+    <updated>2022-11-04T05:42:46.879Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h2 id=&quot;C-与C的区别&quot;&gt;&lt;a href=&quot;#C-与C的区别&quot; class=&quot;headerlink&quot; title=&quot;C++与C的区别&quot;&gt;&lt;/a&gt;C++与C的区别&lt;/h2&gt;&lt;h3 id=&quot;1-面向对象与面向过程的区别&quot;&gt;&lt;a href=&quot;#1-面向对象与面向过程的区别&quot;</summary>
+        
+      
+    
+    
+    
+    <category term="面试" scheme="http://example.com/categories/%E9%9D%A2%E8%AF%95/"/>
+    
+    
+    <category term="八股文" scheme="http://example.com/tags/%E5%85%AB%E8%82%A1%E6%96%87/"/>
+    
+    <category term="C/C++" scheme="http://example.com/tags/C-C/"/>
+    
+    <category term="虚函数" scheme="http://example.com/tags/%E8%99%9A%E5%87%BD%E6%95%B0/"/>
+    
+    <category term="多态" scheme="http://example.com/tags/%E5%A4%9A%E6%80%81/"/>
+    
+    <category term="面向对象和面向过程" scheme="http://example.com/tags/%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E5%92%8C%E9%9D%A2%E5%90%91%E8%BF%87%E7%A8%8B/"/>
+    
+  </entry>
+  
+  <entry>
     <title>栈和队列相互转化</title>
     <link href="http://example.com/2022/11/04/%E6%A0%88%E5%92%8C%E9%98%9F%E5%88%97%E7%9B%B8%E4%BA%92%E8%BD%AC%E6%8D%A2/"/>
     <id>http://example.com/2022/11/04/%E6%A0%88%E5%92%8C%E9%98%9F%E5%88%97%E7%9B%B8%E4%BA%92%E8%BD%AC%E6%8D%A2/</id>
     <published>2022-11-04T05:13:16.000Z</published>
-    <updated>2022-11-04T05:29:29.134Z</updated>
+    <updated>2022-11-04T05:31:03.229Z</updated>
     
     
       

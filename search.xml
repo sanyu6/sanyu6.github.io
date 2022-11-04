@@ -1,6 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>C和C++的区别</title>
+    <url>/2022/11/04/C%E5%92%8CC++%E7%9A%84%E5%8C%BA%E5%88%AB/</url>
+    <content><![CDATA[<h2 id="C-与C的区别"><a href="#C-与C的区别" class="headerlink" title="C++与C的区别"></a>C++与C的区别</h2><h3 id="1-面向对象与面向过程的区别"><a href="#1-面向对象与面向过程的区别" class="headerlink" title="1. 面向对象与面向过程的区别"></a>1. 面向对象与面向过程的区别</h3><h4 id="介绍（C-–-gt-面向过程；C-–-gt-面向对象）："><a href="#介绍（C-–-gt-面向过程；C-–-gt-面向对象）：" class="headerlink" title="介绍（C –> 面向过程；C++ –> 面向对象）："></a>介绍（C –&gt; 面向过程；C++ –&gt; 面向对象）：</h4><p><img src="5524d2881558f6a09fa58c49504a79c3.png" alt="截图"></p>
+<img src="5a1df23b0f6997a5cfd01e013a12ec14.png" alt="截图" style="zoom:50%;">
+
+<img src="e1dbb2fa3d1f39ff7524c416ff69eb54.png" alt="截图" style="zoom:50%;">
+
+<h4 id="两者的优劣："><a href="#两者的优劣：" class="headerlink" title="两者的优劣："></a>两者的优劣：</h4><p><img src="43abbcb1e7b2df636971daa55c118138.png" alt="截图"></p>
+<h3 id="2-其他区别"><a href="#2-其他区别" class="headerlink" title="2. 其他区别"></a>2. 其他区别</h3><h4 id="1-返回值"><a href="#1-返回值" class="headerlink" title="1.  返回值"></a>1.  返回值</h4><p>C语言中如果一个函数没有指定返回值类型则默认int，而C++默认void</p>
+<h4 id="2-参数列表"><a href="#2-参数列表" class="headerlink" title="2. 参数列表"></a>2. 参数列表</h4><p>C语言中函数参数列表为空时可以传入任意多的参数，而C++则不能传入参数</p>
+<h4 id="3-缺省参数"><a href="#3-缺省参数" class="headerlink" title="3. 缺省参数"></a>3. 缺省参数</h4><p>缺省参数就是给函数参数一个默认值，若调用时没传入就采用默认值。C不支持缺省参数，而C++支持（注意默认的参数要靠参数列表后边；缺省参数不能同时出现在函数定义和函数实现中）</p>
+<h4 id="4-函数重载"><a href="#4-函数重载" class="headerlink" title="4. 函数重载"></a>4. 函数重载</h4><p>C++可以实现函数重载，C不可以</p>
+<h4 id="5-后缀名不同"><a href="#5-后缀名不同" class="headerlink" title="5. 后缀名不同"></a>5. 后缀名不同</h4><p>C是.c而C++是.cpp</p>
+<h4 id="6-关键字不同"><a href="#6-关键字不同" class="headerlink" title="6.关键字不同"></a>6.关键字不同</h4><p><img src="6992917f2f4ea0c6c2a3dfd4b3894a5e.png" alt="截图"></p>
+<h3 id="3-struct-和-class区别"><a href="#3-struct-和-class区别" class="headerlink" title="3. struct 和 class区别"></a>3. struct 和 class区别</h3><h4 id="C-中struct和class区别："><a href="#C-中struct和class区别：" class="headerlink" title="C ++ 中struct和class区别："></a>C ++ 中struct和class区别：</h4><ol>
+<li>默认权限不同：（struct默认是public, 而class默认是private）</li>
+<li>class可以声明模板，而struct不可以</li>
+</ol>
+<h4 id="C中的struct和C-的Struct区别："><a href="#C中的struct和C-的Struct区别：" class="headerlink" title="C中的struct和C++的Struct区别："></a>C中的struct和C++的Struct区别：</h4><p>注意： C++的struct和C的struct不一样， C++的struct和class差不多如上所述。</p>
+<p>C中Struct不能存放函数（但是能用函数指针来实现）以及没有权限设置。所以C中的Struct 只能是一些变量的集合体，可以封装数据。</p>
+<h5 id="C中struct利用函数指针存放函数案例："><a href="#C中struct利用函数指针存放函数案例：" class="headerlink" title="C中struct利用函数指针存放函数案例："></a>C中struct利用函数指针存放函数案例：</h5><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">#include &lt;stdio.h&gt;</span><br><span class="line"> </span><br><span class="line">struct FuncInside</span><br><span class="line">{</span><br><span class="line">	int mA;</span><br><span class="line">	void (*pFunc)();</span><br><span class="line">};</span><br><span class="line"> </span><br><span class="line">void Foo()</span><br><span class="line">{</span><br><span class="line">	printf("Hello, Function Inside Struct!\n");</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">void main(void)</span><br><span class="line">{</span><br><span class="line">	struct FuncInside f;</span><br><span class="line">	f.mA = 99;</span><br><span class="line">	f.pFunc = Foo;</span><br><span class="line">	f.pFunc();</span><br><span class="line">	getchar();</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+
+<h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><p><a href="https://zhuanlan.zhihu.com/p/28427324">面向对象与面向过程的区别</a></p>
+<p><a href="https://www.cnblogs.com/yocichen/p/10960287.html">Struct和Class的区别</a></p>
+<p><a href="https://blog.csdn.net/cherrydreamsover/article/details/81835976">C语言和C++的区别</a></p>
+<p><a href="https://blog.csdn.net/tcpipstack/article/details/8259225">C语言的struct存放函数</a></p>
+]]></content>
+      <categories>
+        <category>面试</category>
+      </categories>
+      <tags>
+        <tag>八股文</tag>
+        <tag>C/C++</tag>
+        <tag>虚函数</tag>
+        <tag>多态</tag>
+        <tag>面向对象和面向过程</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>栈和队列相互转化</title>
     <url>/2022/11/04/%E6%A0%88%E5%92%8C%E9%98%9F%E5%88%97%E7%9B%B8%E4%BA%92%E8%BD%AC%E6%8D%A2/</url>
     <content><![CDATA[<h2 id="1-两个栈实现队列"><a href="#1-两个栈实现队列" class="headerlink" title="1. 两个栈实现队列"></a>1. 两个栈实现队列</h2><p>栈1用来插入尾巴元素，栈2原来输出队列头部，若栈2为空则将栈1压入栈2，此时栈2的栈顶即为队列头</p>
