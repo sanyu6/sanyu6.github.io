@@ -115,6 +115,7 @@
 <p>利用会话图学到的嵌入给全局物品图生成正样本（注意会话图只能利用初始物品的嵌入来预测，因为他后面学到的都是会话级别的嵌入）</p>
 <p><img src="5769127bb8155436e950c55c59ac3c11.png" alt="截图"></p>
 <p><img src="d8c9e93abde309dc8387be80db500c41.png" alt="截图"></p>
+<p><img src="34bb6f3d3eb1ab31252bb02caaf54127.png" alt="截图"></p>
 <h4 id="4-2-对抗训练"><a href="#4-2-对抗训练" class="headerlink" title="4.2 对抗训练"></a>4.2 对抗训练</h4><br>
 
 <p><img src="1b14a2c1aad9cd82b5956290c9685be0.png" alt="截图"></p>
