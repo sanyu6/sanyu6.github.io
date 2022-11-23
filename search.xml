@@ -1,6 +1,228 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>C++多态理解</title>
+    <url>/2022/11/23/C++%E5%A4%9A%E6%80%81/</url>
+    <content><![CDATA[<h2 id="C-多态"><a href="#C-多态" class="headerlink" title="C++ 多态"></a>C++ 多态</h2><h4 id="相同的方式调用，具有不同的实现方式。一个接口，多种方法"><a href="#相同的方式调用，具有不同的实现方式。一个接口，多种方法" class="headerlink" title="相同的方式调用，具有不同的实现方式。一个接口，多种方法"></a>相同的方式调用，具有不同的实现方式。一个接口，多种方法</h4><h3 id="静态多态"><a href="#静态多态" class="headerlink" title="静态多态"></a>静态多态</h3><p>在编译期间就完成的，编译器根据函数实参的类型，可以推断出需要调用的函数。有两种实现手段（函数重载或函数模板）</p>
+<h4 id="1-函数重载"><a href="#1-函数重载" class="headerlink" title="1.函数重载"></a>1.函数重载</h4><p>包括普通函数和成员函数。其中函数的参数个数，以及参数类型不同。C++在编译期间为每个函数的修饰名规则与C不同，所以可以实现重载（C++ 函数修饰名包括了所有参数的类型）。其具体规则看 <a href="https://blog.csdn.net/qq_37934101/article/details/81365449">blog</a></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">void swap1(int *a, int *b);      //交换 int 变量的值</span><br><span class="line">void swap2(float *a, float *b);  //交换 float 变量的值</span><br><span class="line">void swap3(char *a, char *b);    //交换 char 变量的值</span><br><span class="line">void swap4(bool *a, bool *b);    //交换 bool 变量的值</span><br></pre></td></tr></table></figure>
+
+<h4 id="2-函数模板"><a href="#2-函数模板" class="headerlink" title="2.函数模板"></a>2.函数模板</h4><p>函数模板是通用的函数描述，通过将参数类型传递给模板，使得编译器生成相关函数。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">#include &lt;iostream&gt;</span><br><span class="line">using namespace std;</span><br><span class="line">template&lt;class T&gt;</span><br><span class="line">void Swap(T &amp; x, T &amp; y)</span><br><span class="line">{</span><br><span class="line">    T tmp = x;</span><br><span class="line">    x = y;</span><br><span class="line">    y = tmp;</span><br><span class="line">}</span><br><span class="line">int main()</span><br><span class="line">{</span><br><span class="line">    int n = 1, m = 2;</span><br><span class="line">    Swap(n, m);  //编译器自动生成 void Swap (int &amp;, int &amp;)函数</span><br><span class="line">    double f = 1.2, g = 2.3;</span><br><span class="line">    Swap(f, g);  //编译器自动生成 void Swap (double &amp;, double &amp;)函数</span><br><span class="line">    return 0;</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+
+<h3 id="动态多态"><a href="#动态多态" class="headerlink" title="动态多态"></a>动态多态</h3><h4 id="构成动态多态需要三个步骤："><a href="#构成动态多态需要三个步骤：" class="headerlink" title="构成动态多态需要三个步骤："></a>构成动态多态需要三个步骤：</h4><ol>
+<li><p>子类重写父类虚函数。（类内实现）</p>
+</li>
+<li><p>父类指针指向子类对象。（类外实现）</p>
+</li>
+<li><p>利用该指针调用子类虚函数。 （类外实现）</p>
+</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">class BasicGame</span><br><span class="line">{</span><br><span class="line">public:</span><br><span class="line">	virtual void exeGame() = 0;		// 纯虚函数,子类必须重写虚函数</span><br><span class="line">}</span><br><span class="line">class TCSGame :public 	//继抽象类 BasicGame</span><br><span class="line">{</span><br><span class="line">public:</span><br><span class="line">	virtual void exeGame()		// 【步骤一】 重写虚函数</span><br><span class="line">	{</span><br><span class="line">	}</span><br><span class="line">}</span><br><span class="line">void test()</span><br><span class="line">{</span><br><span class="line">	BasicGame *b = new TCSGame();	//【步骤二】父类指针指向子类对象</span><br><span class="line">	b-&gt;exeGame(); //【步骤三】 用该指针调用子类虚函数</span><br><span class="line">	// 注：用引用的方式也可以，因为引用的本质也是指针</span><br><span class="line">// 	BasicGame b</span><br><span class="line">// 	TCSGame t</span><br><span class="line">// 	BasicGame &amp;rb = b</span><br><span class="line">// 	BasicGame &amp;rt = t</span><br><span class="line">// 	rb.exeGame()</span><br><span class="line">// 	rt.exeGame()</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+
+<h3 id="重写、重载、重定义区别"><a href="#重写、重载、重定义区别" class="headerlink" title="重写、重载、重定义区别"></a>重写、重载、重定义区别</h3><p><img src="d7fda9fe504a7971c4144a9c8355501b.png" alt="截图"></p>
+<p>协变就是，父类和子类的虚函数的返回对象不同，但是有向下派生的关系。</p>
+<p>例如父类虚函数返回父类对象的指针或引用（Parent）,子类虚函数返回子类对象的指针或者引用时（Child）,称为协变。</p>
+<p>父类可以返回其他类的对象（AParent）,但是子类也要返回（AChild）</p>
+<h3 id="虚函数"><a href="#虚函数" class="headerlink" title="虚函数"></a>虚函数</h3><p>多态的关键就是虚函数，父类通过virtual关键字声明和实现虚函数后。此时父类会拥有一张虚函数表（数组，由虚指针得到），虚函数表会记录对应的函数指针（指向对应的虚函数）。当子类继承父类时也会获得一张虚函数表，若子类重写某个虚函数，其虚函数表上的指针会被替换为子类的虚函数指针。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">class base {</span><br><span class="line">public:</span><br><span class="line">    int v1;</span><br><span class="line">    virtual void f1() {}</span><br><span class="line">    virtual void f2() {}</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">class sub : public base {</span><br><span class="line">    int v2;</span><br><span class="line">    virtual void f1() {}</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+
+<img src="3a5d3e6931fb85503b415308b4a1e405.png" alt="截图" style="zoom:50%;">
+
+<h4 id="详细案例："><a href="#详细案例：" class="headerlink" title="详细案例："></a>详细案例：</h4><p><img src="f932b5814918da3c8b6364c83dc36e90.png" alt="截图"></p>
+<h3 id="虚函数与-构造函数和析构函数-的相关知识"><a href="#虚函数与-构造函数和析构函数-的相关知识" class="headerlink" title="虚函数与(构造函数和析构函数)的相关知识"></a>虚函数与(构造函数和析构函数)的相关知识</h3><h4 id="1-构造函数和析构函数能不能是虚函数"><a href="#1-构造函数和析构函数能不能是虚函数" class="headerlink" title="1.构造函数和析构函数能不能是虚函数"></a>1.构造函数和析构函数能不能是虚函数</h4><p>构造函数不能是虚函数：因为类构造过程首先分配一块内存（空的），然后调用构造函数。如果构造函数是虚函数，那么就需要虚函数表来调用，但是此时内存里没有虚函数表，因此构造函数不能是虚函数。</p>
+<p>析构函数必须是虚函数：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">// 析构函数不是虚函数</span><br><span class="line">// (1)</span><br><span class="line">class child:public parent{};</span><br><span class="line">parent *p = new child();</span><br><span class="line">delete p;   //调用父类析构函数，子类析构函数不会被调用</span><br><span class="line"></span><br><span class="line">// (2) </span><br><span class="line">class child:public parent{};</span><br><span class="line">child*p = new child();</span><br><span class="line">delete p;   //先调用子类的析构函数，再调用父类的析构函数</span><br><span class="line"></span><br><span class="line">// (3) 析构函数是虚函数，子类析构可以不加virtual(不规范)</span><br><span class="line">class parent{</span><br><span class="line">	virtual	~parent();</span><br><span class="line">};</span><br><span class="line">class child:public parent</span><br><span class="line">{</span><br><span class="line">	~child();</span><br><span class="line">};</span><br><span class="line">parent *p = new child();</span><br><span class="line">delete p;   //先调用子类的析构函数，再调用父类的析构函数</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>通过上面的例子我们知道，通常为了实现多态我们用的都是父类指针指向子类对象，但是此时若析构函数不是虚函数，我们则只能调用父类析构函数，而不能清除子类的资源。</p>
+<h4 id="2-构造函数和析构函数中能不能调用虚函数"><a href="#2-构造函数和析构函数中能不能调用虚函数" class="headerlink" title="2.构造函数和析构函数中能不能调用虚函数"></a>2.构造函数和析构函数中能不能调用虚函数</h4><p>可以用，但是最好不要用。类的构造顺序是父类 –&gt;子类，析构顺序是子类 –&gt; 父类。</p>
+<p>当父类在执行构造函数时，子类的数据成员还未初始化。若在父类中调用虚函数被解析成子类的虚函数，而子类的虚函数又访问未初始化的数据时，此时会有未知风险。</p>
+<p>同理在析构函数时，调用父类析构函数时子类的析构已经执行完成（子类资源已经释放），所以此时父类调用的虚函数会访问已经释放的数据，也会有风险。</p>
+<p>所以基于此，c++ primer 第四版中497页15.4.5构造函数和析构中的虚函数讲到，如果在构造函数或析构函数中调用虚函数，则运行的是为构造函数或析构函数自身类型定义的版本（虚机制失效）。另外，必须通过基类类型的引用或指针进行函数调用才会发生多态。</p>
+<h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><p><a href="https://haicoder.net/cpp/cpp-reference-polymorphic.html">引用方式实现多态</a></p>
+<p><a href="https://blog.csdn.net/norman_irsa/article/details/102873065">协变讲解</a></p>
+<p><a href="https://zhuanlan.zhihu.com/p/47057750">多态基础知识1</a></p>
+<p><a href="https://blog.csdn.net/qq_37934101/article/details/81365449">多态基础知识2</a></p>
+<p><a href="https://blog.csdn.net/ff_gogo/article/details/88720412">析构函数的使用</a></p>
+<p><a href="https://zhuanlan.zhihu.com/p/424508028">构造函数与析构函数能否调用虚函数1？</a></p>
+<p><a href="https://www.cnblogs.com/sylar5/p/11523992.html">构造函数与析构函数能否调用虚函数2？</a></p>
+<p><a href="https://bbs.csdn.net/topics/390537893">构造函数与析构函数能否调用虚函数3？</a></p>
+]]></content>
+      <categories>
+        <category>面试</category>
+      </categories>
+      <tags>
+        <tag>八股文</tag>
+        <tag>C/C++</tag>
+        <tag>虚函数</tag>
+        <tag>多态</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>DHCN论文阅读</title>
+    <url>/2022/11/23/DHCN/</url>
+    <content><![CDATA[<h2 id="AAAI’21-Self-Supervised-Hypergraph-Convolutional-Networks-for-Session-based-Recommendation-DHCN"><a href="#AAAI’21-Self-Supervised-Hypergraph-Convolutional-Networks-for-Session-based-Recommendation-DHCN" class="headerlink" title="(AAAI’21)Self-Supervised Hypergraph Convolutional Networks for Session-based Recommendation(DHCN)"></a>(AAAI’21)Self-Supervised Hypergraph Convolutional Networks for Session-based Recommendation(DHCN)</h2><br>
+
+<h3 id="1-架构图"><a href="#1-架构图" class="headerlink" title="1. 架构图"></a>1. 架构图</h3><p><img src="3d4ffcd738b8927352e0b3b7a929cc7c.png" alt="截图"></p>
+<h3 id="2-本文思想概述"><a href="#2-本文思想概述" class="headerlink" title="2. 本文思想概述"></a>2. 本文思想概述</h3><p>这篇和上一篇（COTREC）本质上是一样的，仅仅在最后做自监督时，采用两个视图的会话嵌入来对比。虽然引入超图以及线图，但是实质没有改变（同一个组的文章）。</p>
+<h3 id="3-会话嵌入学习"><a href="#3-会话嵌入学习" class="headerlink" title="3. 会话嵌入学习"></a>3. 会话嵌入学习</h3><h4 id="3-1-会话超图嵌入学习"><a href="#3-1-会话超图嵌入学习" class="headerlink" title="3.1 会话超图嵌入学习"></a>3.1 会话超图嵌入学习</h4><p><img src="459621a14d45b229fcf6edb3447851c6.png" alt="截图"></p>
+<p><img src="3cf8cc7f7fa9b1c3a4be5cdcf97cd488.png" alt="截图"></p>
+<p><img src="4484a5c9bda9606381e884b5d9830389.png" alt="截图"></p>
+<p><img src="8905faee130e8185f5646475cf2d67a4.png" alt="截图"></p>
+<p>这里把每一个session当作一个超边，其中物品就是每条超边关联的点。这里就是超图卷据，不过作者引入门控机制，使得节点嵌入有选择的输入到模型中。其实这里超图卷积可以看作每个session内全连接的一个全局物品图，在上面做GNN（和COTREC不同的就是，哪里的session内不是全连接，而且这里还引入了门控机制）</p>
+<br>
+
+<p><img src="60febe42f52712f585fde66af6722492.png" alt="截图"></p>
+<p><img src="c1562b8800bc1b465e59723e73e1b7b8.png" alt="截图"></p>
+<p>注意这里得到最终的会话嵌入的方法和COTREC有点区别，没有位置编码。仅仅是用每个物品和最后一个物品做一个attention得到<mjx-container class="MathJax" jax="SVG"><svg style="vertical-align: -0.667ex;" xmlns="http://www.w3.org/2000/svg" width="2.012ex" height="1.667ex" role="img" focusable="false" viewBox="0 -442 889.3 737"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="msub"><g data-mml-node="mi"><path data-c="1D460" d="M131 289Q131 321 147 354T203 415T300 442Q362 442 390 415T419 355Q419 323 402 308T364 292Q351 292 340 300T328 326Q328 342 337 354T354 372T367 378Q368 378 368 379Q368 382 361 388T336 399T297 405Q249 405 227 379T204 326Q204 301 223 291T278 274T330 259Q396 230 396 163Q396 135 385 107T352 51T289 7T195 -10Q118 -10 86 19T53 87Q53 126 74 143T118 160Q133 160 146 151T160 120Q160 94 142 76T111 58Q109 57 108 57T107 55Q108 52 115 47T146 34T201 27Q237 27 263 38T301 66T318 97T323 122Q323 150 302 164T254 181T195 196T148 231Q131 256 131 289Z"></path></g><g data-mml-node="mi" transform="translate(502,-150) scale(0.707)"><path data-c="1D454" d="M311 43Q296 30 267 15T206 0Q143 0 105 45T66 160Q66 265 143 353T314 442Q361 442 401 394L404 398Q406 401 409 404T418 412T431 419T447 422Q461 422 470 413T480 394Q480 379 423 152T363 -80Q345 -134 286 -169T151 -205Q10 -205 10 -137Q10 -111 28 -91T74 -71Q89 -71 102 -80T116 -111Q116 -121 114 -130T107 -144T99 -154T92 -162L90 -164H91Q101 -167 151 -167Q189 -167 211 -155Q234 -144 254 -122T282 -75Q288 -56 298 -13Q311 35 311 43ZM384 328L380 339Q377 350 375 354T369 368T359 382T346 393T328 402T306 405Q262 405 221 352Q191 313 171 233T151 117Q151 38 213 38Q269 38 323 108L331 118L384 328Z"></path></g></g></g></g></svg></mjx-container>，最后在融合最后一个物品的嵌入得到最终的会话嵌入。</p>
+<h4 id="3-2-线图嵌入"><a href="#3-2-线图嵌入" class="headerlink" title="3.2 线图嵌入"></a>3.2 线图嵌入</h4><p><img src="9ab88aa1cd27ca9477070e563e746349.png" alt="截图"></p>
+<p><img src="c82360045448fb06d87ad8bb8f929afa.png" alt="截图"></p>
+<p>这里和COTREC的会话图嵌入学习一模一样。</p>
+<h3 id="4-自监督学习"><a href="#4-自监督学习" class="headerlink" title="4. 自监督学习"></a>4. 自监督学习</h3><p><img src="e565bc9cd274aac4a4b98a5e8b389b59.png" alt="截图"></p>
+<p>这里的负样本是通过腐蚀<mjx-container class="MathJax" jax="SVG"><svg style="vertical-align: -0.357ex;" xmlns="http://www.w3.org/2000/svg" width="2.869ex" height="1.952ex" role="img" focusable="false" viewBox="0 -705 1268.3 862.8"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="msub"><g data-mml-node="mi"><path data-c="398" d="M56 340Q56 423 86 494T164 610T270 680T388 705Q521 705 621 601T722 341Q722 260 693 191T617 75T510 4T388 -22T267 3T160 74T85 189T56 340ZM610 339Q610 428 590 495T535 598T463 651T384 668Q332 668 289 638T221 566Q168 485 168 339Q168 274 176 235Q189 158 228 105T324 28Q356 16 388 16Q415 16 442 24T501 54T555 111T594 205T610 339ZM223 263V422H263V388H514V422H554V263H514V297H263V263H223Z"></path></g><g data-mml-node="mi" transform="translate(811,-150) scale(0.707)"><path data-c="210E" d="M137 683Q138 683 209 688T282 694Q294 694 294 685Q294 674 258 534Q220 386 220 383Q220 381 227 388Q288 442 357 442Q411 442 444 415T478 336Q478 285 440 178T402 50Q403 36 407 31T422 26Q450 26 474 56T513 138Q516 149 519 151T535 153Q555 153 555 145Q555 144 551 130Q535 71 500 33Q466 -10 419 -10H414Q367 -10 346 17T325 74Q325 90 361 192T398 345Q398 404 354 404H349Q266 404 205 306L198 293L164 158Q132 28 127 16Q114 -11 83 -11Q69 -11 59 -2T48 16Q48 30 121 320L195 616Q195 629 188 632T149 637H128Q122 643 122 645T124 664Q129 683 137 683Z"></path></g></g></g></g></svg></mjx-container> 和 <mjx-container class="MathJax" jax="SVG"><svg style="vertical-align: -0.357ex;" xmlns="http://www.w3.org/2000/svg" width="2.425ex" height="1.952ex" role="img" focusable="false" viewBox="0 -705 1071.7 862.8"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="msub"><g data-mml-node="mi"><path data-c="398" d="M56 340Q56 423 86 494T164 610T270 680T388 705Q521 705 621 601T722 341Q722 260 693 191T617 75T510 4T388 -22T267 3T160 74T85 189T56 340ZM610 339Q610 428 590 495T535 598T463 651T384 668Q332 668 289 638T221 566Q168 485 168 339Q168 274 176 235Q189 158 228 105T324 28Q356 16 388 16Q415 16 442 24T501 54T555 111T594 205T610 339ZM223 263V422H263V388H514V422H554V263H514V297H263V263H223Z"></path></g><g data-mml-node="mi" transform="translate(811,-150) scale(0.707)"><path data-c="1D459" d="M117 59Q117 26 142 26Q179 26 205 131Q211 151 215 152Q217 153 225 153H229Q238 153 241 153T246 151T248 144Q247 138 245 128T234 90T214 43T183 6T137 -11Q101 -11 70 11T38 85Q38 97 39 102L104 360Q167 615 167 623Q167 626 166 628T162 632T157 634T149 635T141 636T132 637T122 637Q112 637 109 637T101 638T95 641T94 647Q94 649 96 661Q101 680 107 682T179 688Q194 689 213 690T243 693T254 694Q266 694 266 686Q266 675 193 386T118 83Q118 81 118 75T117 65V59Z"></path></g></g></g></g></svg></mjx-container> 来得到的（行和列的shuffling）。局部之间的互信息最大化和MTD那种局部和全局之间的互信息最大化有所区别。</p>
+<h3 id="5-预测（Loss"><a href="#5-预测（Loss" class="headerlink" title="5. 预测（Loss)"></a>5. 预测（Loss)</h3><p><img src="3a4aa7a428bbc59cac2fd31fdc157dda.png" alt="截图"></p>
+<p><img src="62a087becc40f55cc3f339b1aca3948c.png" alt="截图"></p>
+<p><img src="75cea354e73c3bd8a717c4d60bbbacf3.png" alt="截图"></p>
+<p><img src="2d39b7ccc15250d1eb191e06e3b9a2d8.png" alt="截图"></p>
+<p>这里就利用了两个视图的嵌入来得到最终的预测结果</p>
+<h3 id="6-实验结果"><a href="#6-实验结果" class="headerlink" title="6. 实验结果"></a>6. 实验结果</h3><p><img src="01c0111c93c8161b59ad501820244418.png" alt="截图"></p>
+]]></content>
+      <categories>
+        <category>AI论文</category>
+      </categories>
+      <tags>
+        <tag>Recommendation</tag>
+        <tag>Session</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>COTREC论文阅读</title>
+    <url>/2022/11/23/COTREC/</url>
+    <content><![CDATA[<h2 id="CIKM’21-Self-Supervised-Graph-Co-Training-for-Session-based-Recommendation-COTREC"><a href="#CIKM’21-Self-Supervised-Graph-Co-Training-for-Session-based-Recommendation-COTREC" class="headerlink" title="(CIKM’21)Self-Supervised Graph Co-Training for Session-based Recommendation(COTREC)"></a>(CIKM’21)Self-Supervised Graph Co-Training for Session-based Recommendation(COTREC)</h2><h3 id="1-架构图"><a href="#1-架构图" class="headerlink" title="1. 架构图"></a>1. 架构图</h3><p><img src="8c0cbf0f76cc22c1d7485c618f6ffcc0.png" alt="截图"></p>
+<h3 id="2-本文思想概述"><a href="#2-本文思想概述" class="headerlink" title="2. 本文思想概述"></a>2. 本文思想概述</h3><p>通过构造物品的全局图以及会话之间的连接图，来学习两个视图中的会话嵌入，最终利用 Co-Training 来为对方提供标签信息，从而进行自监督学习（具体来说利用全局图预测的下一个物品作为会话图进行自监督的正样本，反之亦然）。</p>
+<h3 id="3-会话嵌入学习"><a href="#3-会话嵌入学习" class="headerlink" title="3. 会话嵌入学习"></a>3. 会话嵌入学习</h3><h4 id="3-1-全局物品图的嵌入学习"><a href="#3-1-全局物品图的嵌入学习" class="headerlink" title="3.1 全局物品图的嵌入学习"></a>3.1 全局物品图的嵌入学习</h4><p><img src="7e57a1de589e6eba676ca646f1c37be3.png" alt="截图"></p>
+<p><img src="7b83a0187195ea00eabf13bb647cf8e4.png" alt="截图"></p>
+<p><img src="c8a5bf293936e17b6a24c9f798f42920.png" alt="截图"></p>
+<p><img src="6fffee1decc484816b5d4fb9da8a4359.png" alt="截图"></p>
+<p><img src="87f5a188a706cb0101de696d522396ee.png" alt="截图"></p>
+<p>就是在全局图上面做GNN，最后对每一个会话中的物品在引入反向位置编码得到特定的会话内的物品嵌入。最后利用GCD-GNN提出的软注意力机制来得到最终的基于全局物品图的会话信息。</p>
+<h4 id="3-2-会话图嵌入学习"><a href="#3-2-会话图嵌入学习" class="headerlink" title="3.2 会话图嵌入学习"></a>3.2 会话图嵌入学习</h4><p><img src="6f5de12a188a3705e51e817fd4ce3414.png" alt="截图"></p>
+<p><img src="9b27eaeb3509ed0be456e96bb1e66e5f.png" alt="截图"></p>
+<p>没啥好说的就是GNN</p>
+<h3 id="4-Co-Training-自监督学习"><a href="#4-Co-Training-自监督学习" class="headerlink" title="4. Co-Training 自监督学习"></a>4. Co-Training 自监督学习</h3><h4 id="4-1-对比学习"><a href="#4-1-对比学习" class="headerlink" title="4.1 对比学习"></a>4.1 对比学习</h4><p>利用全局物品图学到的嵌入位会话图生成正样本：</p>
+<p><img src="030207783a7235d657340376c3453a86.png" alt="截图"></p>
+<p><img src="68acca475464b917e32e5d454b160efa.png" alt="截图"></p>
+<p>利用会话图学到的嵌入给全局物品图生成正样本（注意会话图只能利用初始物品的嵌入来预测，因为他后面学到的都是会话级别的嵌入）</p>
+<p><img src="5769127bb8155436e950c55c59ac3c11.png" alt="截图"></p>
+<p><img src="d8c9e93abde309dc8387be80db500c41.png" alt="截图"></p>
+<h4 id="4-2-对抗训练"><a href="#4-2-对抗训练" class="headerlink" title="4.2 对抗训练"></a>4.2 对抗训练</h4><br>
+
+<p><img src="1b14a2c1aad9cd82b5956290c9685be0.png" alt="截图"></p>
+<p><img src="74ad8b7f78afe303054db46024a6e223.png" alt="截图"></p>
+<p><img src="485ea883fa2425a0ff73f02a7ced2a35.png" alt="截图"></p>
+<p><img src="40da98a42cf687168a85416811577fa4.png" alt="截图"></p>
+<p>就是常规的FGSM方法，沿着梯度上升的方向扰动嵌入，不同的是这里是co-training, 算KL散度时是两个视图之间算（对另一个视图 + adv）。有点疑惑的是，对会话图算概率分布时用的是<mjx-container class="MathJax" jax="SVG"><svg style="vertical-align: -0.339ex;" xmlns="http://www.w3.org/2000/svg" width="2.867ex" height="1.885ex" role="img" focusable="false" viewBox="0 -683 1267.4 833"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="msub"><g data-mml-node="mi"><path data-c="1D44B" d="M42 0H40Q26 0 26 11Q26 15 29 27Q33 41 36 43T55 46Q141 49 190 98Q200 108 306 224T411 342Q302 620 297 625Q288 636 234 637H206Q200 643 200 645T202 664Q206 677 212 683H226Q260 681 347 681Q380 681 408 681T453 682T473 682Q490 682 490 671Q490 670 488 658Q484 643 481 640T465 637Q434 634 411 620L488 426L541 485Q646 598 646 610Q646 628 622 635Q617 635 609 637Q594 637 594 648Q594 650 596 664Q600 677 606 683H618Q619 683 643 683T697 681T738 680Q828 680 837 683H845Q852 676 852 672Q850 647 840 637H824Q790 636 763 628T722 611T698 593L687 584Q687 585 592 480L505 384Q505 383 536 304T601 142T638 56Q648 47 699 46Q734 46 734 37Q734 35 732 23Q728 7 725 4T711 1Q708 1 678 1T589 2Q528 2 496 2T461 1Q444 1 444 10Q444 11 446 25Q448 35 450 39T455 44T464 46T480 47T506 54Q523 62 523 64Q522 64 476 181L429 299Q241 95 236 84Q232 76 232 72Q232 53 261 47Q262 47 267 47T273 46Q276 46 277 46T280 45T283 42T284 35Q284 26 282 19Q279 6 276 4T261 1Q258 1 243 1T201 2T142 2Q64 2 42 0Z"></path></g><g data-mml-node="mi" transform="translate(861,-150) scale(0.707)"><path data-c="1D43C" d="M43 1Q26 1 26 10Q26 12 29 24Q34 43 39 45Q42 46 54 46H60Q120 46 136 53Q137 53 138 54Q143 56 149 77T198 273Q210 318 216 344Q286 624 286 626Q284 630 284 631Q274 637 213 637H193Q184 643 189 662Q193 677 195 680T209 683H213Q285 681 359 681Q481 681 487 683H497Q504 676 504 672T501 655T494 639Q491 637 471 637Q440 637 407 634Q393 631 388 623Q381 609 337 432Q326 385 315 341Q245 65 245 59Q245 52 255 50T307 46H339Q345 38 345 37T342 19Q338 6 332 0H316Q279 2 179 2Q143 2 113 2T65 2T43 1Z"></path></g></g></g></g></svg></mjx-container>。 这里adv计算方式如下（Prob 和 target的一个CrossEntropy来计算，和我之前看过的利用最后的Loss来计算方式不同）：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">adversarial_item</span>(<span class="params">self, item_emb, tar,sess_emb</span>):</span></span><br><span class="line">    adv_item_emb = item_emb + self.adv_item</span><br><span class="line">    score = torch.mm(sess_emb, torch.transpose(adv_item_emb, <span class="number">1</span>, <span class="number">0</span>))</span><br><span class="line">    loss = self.loss_function(score, tar)</span><br><span class="line">    grad = torch.autograd.grad(loss, self.adv_item,retain_graph=<span class="literal">True</span>)[<span class="number">0</span>]</span><br><span class="line">    adv = grad.detach()</span><br><span class="line">    self.adv_item = (F.normalize(adv, p=<span class="number">2</span>,dim=<span class="number">1</span>) * self.eps).requires_grad_(<span class="literal">True</span>)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">adversarial_sess</span>(<span class="params">self, item_emb, tar,sess_emb</span>):</span></span><br><span class="line">    adv_item_emb = item_emb + self.adv_sess</span><br><span class="line">    score = torch.mm(sess_emb, torch.transpose(adv_item_emb, <span class="number">1</span>, <span class="number">0</span>))</span><br><span class="line">    loss = self.loss_function(score, tar)</span><br><span class="line">    grad = torch.autograd.grad(loss, self.adv_sess,retain_graph=<span class="literal">True</span>)[<span class="number">0</span>]</span><br><span class="line">    adv = grad.detach()</span><br><span class="line">    self.adv_sess = (F.normalize(adv, p=<span class="number">2</span>,dim=<span class="number">1</span>) * self.eps).requires_grad_(<span class="literal">True</span>)</span><br></pre></td></tr></table></figure>
+
+<h3 id="5-预测（Loss"><a href="#5-预测（Loss" class="headerlink" title="5. 预测（Loss)"></a>5. 预测（Loss)</h3><p><img src="99c48d1250840905f91ccb4eccb1bc0c.png" alt="截图"></p>
+<p><img src="a173dd0b42e86a87dee10506d7dc7be5.png" alt="截图"></p>
+<p><img src="3bf4e3167bc5c98bc114d8167599d1ae.png" alt="截图"></p>
+<p><img src="3c658df1f6b96fe686dc5c80db5e92ec.png" alt="截图"></p>
+<h3 id="6-实验结果"><a href="#6-实验结果" class="headerlink" title="6. 实验结果"></a>6. 实验结果</h3><br>
+
+<p><img src="57f24257374c821ea7028e2c95a7c94d.png" alt="截图"></p>
+]]></content>
+      <categories>
+        <category>AI论文</category>
+      </categories>
+      <tags>
+        <tag>Recommendation</tag>
+        <tag>Session</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>MTD论文阅读</title>
+    <url>/2022/11/23/MTD/</url>
+    <content><![CDATA[<h2 id="AAAI’21-Graph-Enhanced-Multi-Task-Learning-of-Multi-Level-Transition-Dynamics-for-Session-based-Recommendation-MTD"><a href="#AAAI’21-Graph-Enhanced-Multi-Task-Learning-of-Multi-Level-Transition-Dynamics-for-Session-based-Recommendation-MTD" class="headerlink" title="(AAAI’21)Graph-Enhanced Multi-Task Learning of Multi-Level Transition Dynamics for Session-based Recommendation(MTD )"></a>(AAAI’21)Graph-Enhanced Multi-Task Learning of Multi-Level Transition Dynamics for Session-based Recommendation(MTD )</h2><h3 id="1-架构图"><a href="#1-架构图" class="headerlink" title="1. 架构图"></a>1. 架构图</h3><p><img src="703fc4d351f07aedf21266d46336c30f.png" alt="截图"></p>
+<h3 id="2-本文思想概述"><a href="#2-本文思想概述" class="headerlink" title="2. 本文思想概述"></a>2. 本文思想概述</h3><p>会话图可以看作一个单头transformer学得每个节点的会话内的嵌入，最后所有节点的嵌入进行位置编码以及attention操作得到最终的会话嵌入。自监督学习方面就是引用的 Deep Graph Infomax（DGI）</p>
+<h3 id="3-会话嵌入学习"><a href="#3-会话嵌入学习" class="headerlink" title="3. 会话嵌入学习"></a>3. 会话嵌入学习</h3><h4 id="3-1-初步物品嵌入（transformer-FNN）"><a href="#3-1-初步物品嵌入（transformer-FNN）" class="headerlink" title="3.1 初步物品嵌入（transformer + FNN）"></a>3.1 初步物品嵌入（transformer + FNN）</h4><p><img src="54685cdce76c76dbdd5205ebffe18e60.png" alt="截图"></p>
+<p><img src="b931a23de1b9b00931d6b03e30e15edf.png" alt="截图"></p>
+<p><img src="e93ed7dc44115887433830821598c678.png" alt="截图"></p>
+<h4 id="3-2-基于Attention的会话嵌入（与会话最后一个物品做attention）"><a href="#3-2-基于Attention的会话嵌入（与会话最后一个物品做attention）" class="headerlink" title="3.2 基于Attention的会话嵌入（与会话最后一个物品做attention）"></a>3.2 基于Attention的会话嵌入（与会话最后一个物品做attention）</h4><p><img src="52158eff21d22fed8946fd6f0c48df55.png" alt="截图"></p>
+<p><img src="36713783221e7124fae69ee96e68c0a3.png" alt="截图"></p>
+<p><img src="b2a3b6e8d3e27df3b1a4d24801a9f915.png" alt="截图"></p>
+<h4 id="3-3-位置编码的会话嵌入"><a href="#3-3-位置编码的会话嵌入" class="headerlink" title="3.3 位置编码的会话嵌入"></a>3.3 位置编码的会话嵌入</h4><p><img src="ecd766e3776edeb5725ece7c401e5230.png" alt="截图"></p>
+<h4 id="3-4-最终会话嵌入"><a href="#3-4-最终会话嵌入" class="headerlink" title="3.4 最终会话嵌入"></a>3.4 最终会话嵌入</h4><p><img src="a5953d3ac2cd3ce278a239aaceb54650.png" alt="截图"></p>
+<p>就是将最后一个物品以及前两种会话嵌入综合起来。</p>
+<h3 id="4-自监督学习"><a href="#4-自监督学习" class="headerlink" title="4. 自监督学习"></a>4. 自监督学习</h3><p><img src="13ce10f04e803768bd183c4710aac010.png" alt="截图"></p>
+<p><img src="45badd32901662df7ff7efc616bc40a8.png" alt="截图"></p>
+<p><img src="967d78ea872664e75cf8721aa36853e0.png" alt="截图"></p>
+<p><img src="eaebee9132cfd1235675be250709aafb.png" alt="截图"></p>
+<p><img src="1f80d8e64a62776d22435618fd9aaec4.png" alt="截图"></p>
+<br>
+
+<p>全局图构造：利用会话内的物品转移关系来构造（有向）</p>
+<p>就是用GNN来学得全局图中所有物品的嵌入，最后用<mjx-container class="MathJax" jax="SVG"><svg style="vertical-align: -0.029ex;" xmlns="http://www.w3.org/2000/svg" width="1.17ex" height="1.005ex" role="img" focusable="false" viewBox="0 -431 517 444"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mi"><path data-c="1D70F" d="M39 284Q18 284 18 294Q18 301 45 338T99 398Q134 425 164 429Q170 431 332 431Q492 431 497 429Q517 424 517 402Q517 388 508 376T485 360Q479 358 389 358T299 356Q298 355 283 274T251 109T233 20Q228 5 215 -4T186 -13Q153 -13 153 20V30L203 192Q214 228 227 272T248 336L254 357Q254 358 208 358Q206 358 197 358T183 359Q105 359 61 295Q56 287 53 286T39 284Z"></path></g></g></g></svg></mjx-container>(Mean) 操作来得到全局图级别的嵌入，然后利用就可以利用GMI的方式来进行自监督学习。其中正样本就是当前图中的节点嵌入与全局图的嵌入，负样本就是通过扰动<mjx-container class="MathJax" jax="SVG"><svg style="vertical-align: 0;" xmlns="http://www.w3.org/2000/svg" width="3.116ex" height="1.887ex" role="img" focusable="false" viewBox="0 -833.9 1377.4 833.9"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="msup"><g data-mml-node="mi"><path data-c="1D43B" d="M228 637Q194 637 192 641Q191 643 191 649Q191 673 202 682Q204 683 219 683Q260 681 355 681Q389 681 418 681T463 682T483 682Q499 682 499 672Q499 670 497 658Q492 641 487 638H485Q483 638 480 638T473 638T464 637T455 637Q416 636 405 634T387 623Q384 619 355 500Q348 474 340 442T328 395L324 380Q324 378 469 378H614L615 381Q615 384 646 504Q674 619 674 627T617 637Q594 637 587 639T580 648Q580 650 582 660Q586 677 588 679T604 682Q609 682 646 681T740 680Q802 680 835 681T871 682Q888 682 888 672Q888 645 876 638H874Q872 638 869 638T862 638T853 637T844 637Q805 636 794 634T776 623Q773 618 704 340T634 58Q634 51 638 51Q646 48 692 46H723Q729 38 729 37T726 19Q722 6 716 0H701Q664 2 567 2Q533 2 504 2T458 2T437 1Q420 1 420 10Q420 15 423 24Q428 43 433 45Q437 46 448 46H454Q481 46 514 49Q520 50 522 50T528 55T534 64T540 82T547 110T558 153Q565 181 569 198Q602 330 602 331T457 332H312L279 197Q245 63 245 58Q245 51 253 49T303 46H334Q340 38 340 37T337 19Q333 6 327 0H312Q275 2 178 2Q144 2 115 2T69 2T48 1Q31 1 31 10Q31 12 34 24Q39 43 44 45Q48 46 59 46H65Q92 46 125 49Q139 52 144 61Q147 65 216 339T285 628Q285 635 228 637Z"></path></g><g data-mml-node="mn" transform="translate(973.9,363) scale(0.707)"><path data-c="30" d="M96 585Q152 666 249 666Q297 666 345 640T423 548Q460 465 460 320Q460 165 417 83Q397 41 362 16T301 -15T250 -22Q224 -22 198 -16T137 16T82 83Q39 165 39 320Q39 494 96 585ZM321 597Q291 629 250 629Q208 629 178 597Q153 571 145 525T137 333Q137 175 145 125T181 46Q209 16 250 16Q290 16 318 46Q347 76 354 130T362 333Q362 478 354 524T321 597Z"></path></g></g></g></g></svg></mjx-container>使得每个节点的嵌入是错误的（A不变），最后经过GNN得到负样本的嵌入。</p>
+<h3 id="5-预测（Loss"><a href="#5-预测（Loss" class="headerlink" title="5. 预测（Loss)"></a>5. 预测（Loss)</h3><p><img src="890da41428afbb44f786795b53625f0b.png" alt="截图"></p>
+<p><img src="de6ebbc063ba8d017cc4b65eaa2f3cc8.png" alt="截图"></p>
+<p>有意思的是这里论文写的是用<mjx-container class="MathJax" jax="SVG"><svg style="vertical-align: -0.023ex;" xmlns="http://www.w3.org/2000/svg" width="1.005ex" height="1.645ex" role="img" focusable="false" viewBox="0 -717 444 727"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mi"><path data-c="1D6FF" d="M195 609Q195 656 227 686T302 717Q319 716 351 709T407 697T433 690Q451 682 451 662Q451 644 438 628T403 612Q382 612 348 641T288 671T249 657T235 628Q235 584 334 463Q401 379 401 292Q401 169 340 80T205 -10H198Q127 -10 83 36T36 153Q36 286 151 382Q191 413 252 434Q252 435 245 449T230 481T214 521T201 566T195 609ZM112 130Q112 83 136 55T204 27Q233 27 256 51T291 111T309 178T316 232Q316 267 309 298T295 344T269 400L259 396Q215 381 183 342T137 256T118 179T112 130Z"></path></g></g></g></svg></mjx-container>来得到最终的<mjx-container class="MathJax" jax="SVG"><svg style="vertical-align: -0.464ex;" xmlns="http://www.w3.org/2000/svg" width="1.109ex" height="2.296ex" role="img" focusable="false" viewBox="0 -810 490 1015"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="TeXAtom" data-mjx-texclass="ORD"><g data-mml-node="mover"><g data-mml-node="mi"><path data-c="1D466" d="M21 287Q21 301 36 335T84 406T158 442Q199 442 224 419T250 355Q248 336 247 334Q247 331 231 288T198 191T182 105Q182 62 196 45T238 27Q261 27 281 38T312 61T339 94Q339 95 344 114T358 173T377 247Q415 397 419 404Q432 431 462 431Q475 431 483 424T494 412T496 403Q496 390 447 193T391 -23Q363 -106 294 -155T156 -205Q111 -205 77 -183T43 -117Q43 -95 50 -80T69 -58T89 -48T106 -45Q150 -45 150 -87Q150 -107 138 -122T115 -142T102 -147L99 -148Q101 -153 118 -160T152 -167H160Q177 -167 186 -165Q219 -156 247 -127T290 -65T313 -9T321 21L315 17Q309 13 296 6T270 -6Q250 -11 231 -11Q185 -11 150 11T104 82Q103 89 103 113Q103 170 138 262T173 379Q173 380 173 381Q173 390 173 393T169 400T158 404H154Q131 404 112 385T82 344T65 302T57 280Q55 278 41 278H27Q21 284 21 287Z"></path></g><g data-mml-node="mo" transform="translate(300.6,16) translate(-250 0)"><path data-c="5E" d="M112 560L249 694L257 686Q387 562 387 560L361 531Q359 532 303 581L250 627L195 580Q182 569 169 557T148 538L140 532Q138 530 125 546L112 560Z"></path></g></g></g></g></g></svg></mjx-container> , 这样不是对输出概率没有归一化吗？但是没找到代码，可能是笔误吧！</p>
+<h3 id="6-实验结果"><a href="#6-实验结果" class="headerlink" title="6. 实验结果"></a>6. 实验结果</h3><p><img src="d70cfbb6e2cdd58d12f1f51eaa7489af.png" alt="截图"></p>
+]]></content>
+      <categories>
+        <category>AI论文</category>
+      </categories>
+      <tags>
+        <tag>Recommendation</tag>
+        <tag>Session</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>GCE-GNN论文阅读</title>
+    <url>/2022/11/23/GCE-GNN/</url>
+    <content><![CDATA[<h2 id="SIGIR’20-Global-Context-Enhanced-Graph-Neural-Networks-for-Session-based-Recommendation-GCE-GNN"><a href="#SIGIR’20-Global-Context-Enhanced-Graph-Neural-Networks-for-Session-based-Recommendation-GCE-GNN" class="headerlink" title="(SIGIR’20)Global Context Enhanced Graph Neural Networks for Session-based Recommendation(GCE-GNN )"></a>(SIGIR’20)Global Context Enhanced Graph Neural Networks for Session-based Recommendation(GCE-GNN )</h2><h3 id="1-架构图"><a href="#1-架构图" class="headerlink" title="1. 架构图"></a>1. 架构图</h3><img src="9aff2d39d56a3d9114910198cc89806d.png" alt="截图" style="zoom:50%;">
+
+<h3 id="2-本文思想概述"><a href="#2-本文思想概述" class="headerlink" title="2. 本文思想概述"></a>2. 本文思想概述</h3><p>利用全局session来构建全局情况下的物品之间的连接关系，然后利用当前session内的物品来构造局部物品连接关系。两者的嵌入均用attention来学习，之后当前会话的嵌入由两者相加得到，再进行位置嵌入编码和attention得到最后的会话嵌入。最后利用得到的会话嵌入进行预测下一个物品。</p>
+<h3 id="3-全局图和会话图构造"><a href="#3-全局图和会话图构造" class="headerlink" title="3. 全局图和会话图构造"></a>3. 全局图和会话图构造</h3><p><img src="1674ef2bdd8fee9515d49fa1ea4e6629.png" alt="截图"></p>
+<p><img src="726031338efe28f306e27fb00c82de8a.png" alt="截图"></p>
+<p>会话图构造：就是常规的利用session内的交互次序来构造图（有向 + 自环）；</p>
+<p>全局图构造：对每一个Item在所有session中抽取<mjx-container class="MathJax" jax="SVG"><svg style="vertical-align: -0.025ex;" xmlns="http://www.w3.org/2000/svg" width="0.919ex" height="1ex" role="img" focusable="false" viewBox="0 -431 406 442"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mi"><path data-c="1D716" d="M227 -11Q149 -11 95 41T40 174Q40 262 87 322Q121 367 173 396T287 430Q289 431 329 431H367Q382 426 382 411Q382 385 341 385H325H312Q191 385 154 277L150 265H327Q340 256 340 246Q340 228 320 219H138V217Q128 187 128 143Q128 77 160 52T231 26Q258 26 284 36T326 57T343 68Q350 68 354 58T358 39Q358 36 357 35Q354 31 337 21T289 0T227 -11Z"></path></g></g></g></svg></mjx-container>的前后邻居（无向）；</p>
+<h3 id="4-会话嵌入学习"><a href="#4-会话嵌入学习" class="headerlink" title="4. 会话嵌入学习"></a>4. 会话嵌入学习</h3><h4 id="4-1-全局图嵌入学习"><a href="#4-1-全局图嵌入学习" class="headerlink" title="4.1 全局图嵌入学习"></a>4.1 全局图嵌入学习</h4><p><img src="79c56a669abf070f943f4099d8fb2862.png" alt="截图"></p>
+<p><img src="d414b644824ef02893094a0a5ba767e3.png" alt="截图"></p>
+<br>
+
+<p><img src="e21926249914da00016ba1391ee54abb.png" alt="截图"></p>
+<p><img src="32026c38cd0ef359cb79b2ecda81cecd.png" alt="截图"></p>
+<p><img src="08642afe66b0d7c3c952b67f186477d5.png" alt="截图"></p>
+<p><img src="857fbb0ce90eb988150998ff5b0b0b8d.png" alt="截图"></p>
+<p>多层Attneion: 利用会话内的物品嵌入初始话一个会话嵌入s，利用s来和全局图的物品做一个attention（会话感知的，相当于关注和当前会话相关的物品），有意思的是这里attention还考虑了边权重。</p>
+<h4 id="4-2-会话图嵌入学习"><a href="#4-2-会话图嵌入学习" class="headerlink" title="4.2 会话图嵌入学习"></a>4.2 会话图嵌入学习</h4><p><img src="3afbd64996269aedc1fc75b32f0b54c7.png" alt="截图"></p>
+<p><img src="78b4971099a08e412ac7a8e19b40b8ad.png" alt="截图"></p>
+<p><img src="af5e0c7699b01ea8fb9aa15d5fff6086.png" alt="截图"></p>
+<p>这里就是一个attention来学的会话内的物品嵌入，由于没有全局图那么多的物品，所以没有堆叠多层了。</p>
+<h4 id="4-3-最终会话嵌入"><a href="#4-3-最终会话嵌入" class="headerlink" title="4.3 最终会话嵌入"></a>4.3 最终会话嵌入</h4><p>首先将上述从两个图中学得的嵌入综合起来得到最终的物品嵌入：</p>
+<p><img src="2a75d18fab6ad4ddcfc370bcbf3713b0.png" alt="截图"></p>
+<p>引入位置编码，距离会话内最后一个物品<mjx-container class="MathJax" jax="SVG"><svg style="vertical-align: -0.73ex;" xmlns="http://www.w3.org/2000/svg" width="10.278ex" height="2.427ex" role="img" focusable="false" viewBox="0 -750 4543.1 1072.6"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="msubsup"><g data-mml-node="mi"><path data-c="1D463" d="M173 380Q173 405 154 405Q130 405 104 376T61 287Q60 286 59 284T58 281T56 279T53 278T49 278T41 278H27Q21 284 21 287Q21 294 29 316T53 368T97 419T160 441Q202 441 225 417T249 361Q249 344 246 335Q246 329 231 291T200 202T182 113Q182 86 187 69Q200 26 250 26Q287 26 319 60T369 139T398 222T409 277Q409 300 401 317T383 343T365 361T357 383Q357 405 376 424T417 443Q436 443 451 425T467 367Q467 340 455 284T418 159T347 40T241 -11Q177 -11 139 22Q102 54 102 117Q102 148 110 181T151 298Q173 362 173 380Z"></path></g><g data-mml-node="mi" transform="translate(518,363) scale(0.707)"><path data-c="1D460" d="M131 289Q131 321 147 354T203 415T300 442Q362 442 390 415T419 355Q419 323 402 308T364 292Q351 292 340 300T328 326Q328 342 337 354T354 372T367 378Q368 378 368 379Q368 382 361 388T336 399T297 405Q249 405 227 379T204 326Q204 301 223 291T278 274T330 259Q396 230 396 163Q396 135 385 107T352 51T289 7T195 -10Q118 -10 86 19T53 87Q53 126 74 143T118 160Q133 160 146 151T160 120Q160 94 142 76T111 58Q109 57 108 57T107 55Q108 52 115 47T146 34T201 27Q237 27 263 38T301 66T318 97T323 122Q323 150 302 164T254 181T195 196T148 231Q131 256 131 289Z"></path></g><g data-mml-node="mi" transform="translate(518,-314.8) scale(0.707)"><path data-c="1D459" d="M117 59Q117 26 142 26Q179 26 205 131Q211 151 215 152Q217 153 225 153H229Q238 153 241 153T246 151T248 144Q247 138 245 128T234 90T214 43T183 6T137 -11Q101 -11 70 11T38 85Q38 97 39 102L104 360Q167 615 167 623Q167 626 166 628T162 632T157 634T149 635T141 636T132 637T122 637Q112 637 109 637T101 638T95 641T94 647Q94 649 96 661Q101 680 107 682T179 688Q194 689 213 690T243 693T254 694Q266 694 266 686Q266 675 193 386T118 83Q118 81 118 75T117 65V59Z"></path></g></g><g data-mml-node="mstyle" transform="translate(899.6,0)"><g data-mml-node="mspace"></g></g><g data-mml-node="mo" transform="translate(1899.6,0)"><path data-c="28" d="M94 250Q94 319 104 381T127 488T164 576T202 643T244 695T277 729T302 750H315H319Q333 750 333 741Q333 738 316 720T275 667T226 581T184 443T167 250T184 58T225 -81T274 -167T316 -220T333 -241Q333 -250 318 -250H315H302L274 -226Q180 -141 137 -14T94 250Z"></path></g><g data-mml-node="mi" transform="translate(2288.6,0)"><path data-c="1D459" d="M117 59Q117 26 142 26Q179 26 205 131Q211 151 215 152Q217 153 225 153H229Q238 153 241 153T246 151T248 144Q247 138 245 128T234 90T214 43T183 6T137 -11Q101 -11 70 11T38 85Q38 97 39 102L104 360Q167 615 167 623Q167 626 166 628T162 632T157 634T149 635T141 636T132 637T122 637Q112 637 109 637T101 638T95 641T94 647Q94 649 96 661Q101 680 107 682T179 688Q194 689 213 690T243 693T254 694Q266 694 266 686Q266 675 193 386T118 83Q118 81 118 75T117 65V59Z"></path></g><g data-mml-node="mo" transform="translate(2808.9,0)"><path data-c="2212" d="M84 237T84 250T98 270H679Q694 262 694 250T679 230H98Q84 237 84 250Z"></path></g><g data-mml-node="mi" transform="translate(3809.1,0)"><path data-c="1D456" d="M184 600Q184 624 203 642T247 661Q265 661 277 649T290 619Q290 596 270 577T226 557Q211 557 198 567T184 600ZM21 287Q21 295 30 318T54 369T98 420T158 442Q197 442 223 419T250 357Q250 340 236 301T196 196T154 83Q149 61 149 51Q149 26 166 26Q175 26 185 29T208 43T235 78T260 137Q263 149 265 151T282 153Q302 153 302 143Q302 135 293 112T268 61T223 11T161 -11Q129 -11 102 10T74 74Q74 91 79 106T122 220Q160 321 166 341T173 380Q173 404 156 404H154Q124 404 99 371T61 287Q60 286 59 284T58 281T56 279T53 278T49 278T41 278H27Q21 284 21 287Z"></path></g><g data-mml-node="mo" transform="translate(4154.1,0)"><path data-c="29" d="M60 749L64 750Q69 750 74 750H86L114 726Q208 641 251 514T294 250Q294 182 284 119T261 12T224 -76T186 -143T145 -194T113 -227T90 -246Q87 -249 86 -250H74Q66 -250 63 -250T58 -247T55 -238Q56 -237 66 -225Q221 -64 221 250T66 725Q56 737 55 738Q55 746 60 749Z"></path></g></g></g></svg></mjx-container>的距离</p>
+<p><img src="f814e0051745649dfe6e0c75768b21e3.png" alt="截图"></p>
+<p>这里利用软attention来得到最终的会话嵌入（系数没有归一化）</p>
+<p><img src="93877447936061dfe49a07951864dee2.png" alt="截图"></p>
+<p><img src="f89620101e43d27321c5b049c79d73be.png" alt="截图"></p>
+<p><img src="d4e005f219eb3d82ef54953b81a0e19f.png" alt="截图"></p>
+<br>
+
+<h3 id="5-预测（Loss）"><a href="#5-预测（Loss）" class="headerlink" title="5. 预测（Loss）"></a>5. 预测（Loss）</h3><p>这里就是常规多分类的损失了：</p>
+<p><img src="1ee0fa8483193437ea0efa6a2e374497.png" alt="截图"></p>
+<p><img src="d52b3063654c5ff5e2fc33666641c1f5.png" alt="截图"></p>
+<h3 id="6-实验结果"><a href="#6-实验结果" class="headerlink" title="6. 实验结果"></a>6. 实验结果</h3><p><img src="66ed69b1c9ed7badeff183c80b28eac9.png" alt="截图"></p>
+]]></content>
+      <categories>
+        <category>AI论文</category>
+      </categories>
+      <tags>
+        <tag>Recommendation</tag>
+        <tag>Session</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>C和C++的区别</title>
     <url>/2022/11/04/C%E5%92%8CC++%E7%9A%84%E5%8C%BA%E5%88%AB/</url>
     <content><![CDATA[<h2 id="C-与C的区别"><a href="#C-与C的区别" class="headerlink" title="C++与C的区别"></a>C++与C的区别</h2><h3 id="1-面向对象与面向过程的区别"><a href="#1-面向对象与面向过程的区别" class="headerlink" title="1. 面向对象与面向过程的区别"></a>1. 面向对象与面向过程的区别</h3><h4 id="介绍（C-–-gt-面向过程；C-–-gt-面向对象）："><a href="#介绍（C-–-gt-面向过程；C-–-gt-面向对象）：" class="headerlink" title="介绍（C –> 面向过程；C++ –> 面向对象）："></a>介绍（C –&gt; 面向过程；C++ –&gt; 面向对象）：</h4><p><img src="5524d2881558f6a09fa58c49504a79c3.png" alt="截图"></p>
